@@ -7,7 +7,7 @@
 
 <html>
 	<head>
-		<title>Livre d'or</title>
+		<title>FitTogether</title>
 		<meta charset="utf-8" />
 	</head>
 
@@ -35,7 +35,7 @@
 		%>
 		<p>
 			<strong><%= user.getPrenom() %> <%= user.getNom() %></strong> est aussi inscrit, avec 
-			<%= user.getCoins() %>
+			<%= user.getCoins() %> SportCoins. <br />
 		</p>
 		<%
 			}
