@@ -9,7 +9,7 @@ import com.googlecode.objectify.annotation.*;
 public class User implements UserInterface {
 	
 	@Parent Key parent;
-	@Id int id;
+	@Id String id;
 	private String nom;
 	private String prenom;
 	@Index private int coins;
@@ -21,11 +21,12 @@ public class User implements UserInterface {
 		this.prenom = prenom;
 		this.coins = coins;
 		this.parent = KeyFactory.createKey("RepertoireUser", "RepertoireUser");
+		id = prenom+nom;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 		
 	}
