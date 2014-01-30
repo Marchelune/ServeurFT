@@ -8,6 +8,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>ServeurFT1Servlet</servlet-name>
         <servlet-class>serveurFT1.ServeurFT1Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InfoUser</servlet-name>
+        <servlet-class>serveurFT1.InfoUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InfoUser</servlet-name>
+        <url-pattern>/InfoUser</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServeurFT1Servlet</servlet-name>
         <url-pattern>/</url-pattern>

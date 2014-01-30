@@ -35,7 +35,7 @@
 		%>
 		<p>
 			<strong><%= user.getPrenom() %> <%= user.getNom() %></strong> est aussi inscrit, avec 
-			<%= user.getCoins() %> SportCoins. <br />
+			<%= user.getCoins() %> SportCoins. Id = <%= user.getId() %> <br />
 		</p>
 		<%
 			}
