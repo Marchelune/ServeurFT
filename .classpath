@@ -4,6 +4,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guava-15.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/objectify-4.0b3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xstream-1.4.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Rémi/.eclipse/org.eclipse.platform_4.3.0_1709980481_win32_win32_x86_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/lib/shared/appengine-local-runtime-shared.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/C:/Users/Rémi/.eclipse/org.eclipse.platform_4.3.0_1709980481_win32_win32_x86_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/docs/javadoc/"/>
@@ -124,6 +125,5 @@
 			<attribute name="javadoc_location" value="file:/C:/Users/Rémi/.eclipse/org.eclipse.platform_4.3.0_1709980481_win32_win32_x86_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/docs/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/xstream-1.4.6.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
