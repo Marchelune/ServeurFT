@@ -8,8 +8,8 @@ import com.googlecode.objectify.annotation.*;
 @Cache
 public class User implements UserInterface {
 	
-	@Parent Key parent;
-	@Id String id;
+	@Parent private transient Key parent;
+	@Id private String id;
 	private String nom;
 	private String prenom;
 	@Index private int coins;
@@ -21,7 +21,7 @@ public class User implements UserInterface {
 		this.prenom = prenom;
 		this.coins = coins;
 		this.parent = KeyFactory.createKey("RepertoireUser", "RepertoireUser");
-		id = prenom+nom;
+		id = prenom+nom+ (int) (Math.random()*100);
 	}
 	public String getId() {
 		return id;

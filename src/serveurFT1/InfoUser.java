@@ -20,11 +20,11 @@ public class InfoUser extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
 		reponse.setContentType("text/xml");
-		
+		String id = request.getParameter("id");
 		PrintWriter out = reponse.getWriter();
 		Serialiseur serialiseur = new Serialiseur();
 
-		out.print(serialiseur.serialise());
+		out.print(serialiseur.serialise(id));
 		
 	}
 	
