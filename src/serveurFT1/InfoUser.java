@@ -3,8 +3,6 @@ package serveurFT1;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +17,14 @@ import donnees.Serialiseur;
 public class InfoUser extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
-		reponse.setContentType("text/xml");
+		reponse.setContentType("text/xml; charset=UTF-8");
 		String id = request.getParameter("id");
 		PrintWriter out = reponse.getWriter();
-		Serialiseur serialiseur = new Serialiseur();
-
-		out.print(serialiseur.serialise(id));
+		if (id != null){
+			Serialiseur serialiseur = new Serialiseur();
+			out.print(serialiseur.serialise(id));
+		}
+		
 		
 	}
 	

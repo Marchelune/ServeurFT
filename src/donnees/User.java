@@ -1,8 +1,11 @@
 package donnees;
 
+import java.util.ArrayList;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.annotation.*;
+
 
 @Entity
 @Cache
@@ -13,7 +16,8 @@ public class User implements UserInterface {
 	private String nom;
 	private String prenom;
 	@Index private int coins;
-	
+	private ArrayList<String> friends;
+	private ArrayList<Exercice> exercices;
 	public User(){};
 	
 	public User(String nom, String prenom, int coins ) {
@@ -52,6 +56,25 @@ public class User implements UserInterface {
 	public void addCoins(int coins) {
 		this.coins += coins;
 		
+	}
+	
+	public void addFriend(String id)
+	{
+		friends.add(id);
+	}
+
+	public void deleteFriend(String id) {
+		friends.remove(id);
+	}
+
+	
+	public ArrayList<Exercice> getExercices() {
+		return exercices;
+	}
+
+	
+	public void addExercices(Exercice e) {
+		exercices.add(e);
 	}
 	
 

@@ -36,7 +36,8 @@ public class ServeurFT1Servlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) {	
         try {
-            // Création de l'objet
+        	req.setCharacterEncoding("UTF-8");
+            // Crï¿½ation de l'objet
             User user = new User(req.getParameter("nom"), req.getParameter("prenom"), Integer.parseInt( req.getParameter("coins")));
             // Enregistrement de l'objet dans le Datastore avec Objectify
             ofy().save().entity(user).now();

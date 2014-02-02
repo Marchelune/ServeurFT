@@ -10,4 +10,6 @@ public interface UserInterface {
 	public int getCoins();
 	public void setCoins(int coins);
 	public void addCoins(int coins);
+	public void addFriend(String id);
+	public void deleteFriend(String id);
 }

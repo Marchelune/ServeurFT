@@ -1,11 +1,9 @@
 package donnees;
 
 import com.google.appengine.api.datastore.KeyFactory;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
-
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class Serialiseur {
@@ -23,7 +21,7 @@ public class Serialiseur {
 		
 		User user = ofy().load().type(User.class).parent(KeyFactory.createKey("RepertoireUser", "RepertoireUser")).id(id).now();
 	
-		XStream xstream = new XStream(new StaxDriver());
+		XStream xstream = new XStream(new DomDriver("UTF-8"));
 		xstream.alias("User", User.class);
 		String userxml = xstream.toXML(user);
 
