@@ -2,22 +2,36 @@ package donnees;
 
 import java.util.ArrayList;
 
-import com.google.appengine.api.datastore.Key;
+
+
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.googlecode.objectify.annotation.*;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
+
 
 
 @Entity
 @Cache
 public class User implements UserInterface {
 	
-	@Parent private transient Key parent;
+	@Parent private transient com.google.appengine.api.datastore.Key parent;   // clé du Datastore
 	@Id private String id;
 	private String nom;
 	private String prenom;
 	@Index private int coins;
 	private ArrayList<String> friends;
-	private ArrayList<Exercice> exercices;
+	private ArrayList<Key<Exercice>> exercices = new ArrayList<Key<Exercice>>();   // clé objectify
+	
+	static {
+        ObjectifyService.register(Exercice.class);
+    }
 	public User(){};
 	
 	public User(String nom, String prenom, int coins ) {
@@ -68,12 +82,18 @@ public class User implements UserInterface {
 	}
 
 	
-	public ArrayList<Exercice> getExercices() {
+	public ArrayList<Key<Exercice>> getExercicesKeys() {
 		return exercices;
 	}
 
+	public Exercice getExercice(int k) { //  renvoie l'objet kème dernier exercice effectué : si k=0 dernier exercice, k=1 avant dernier etc
+		Key<Exercice> exerciceKey = exercices.get(this.getExercicesKeys().size() -1 - k );
+		Exercice exercice = ofy().load().key(exerciceKey).now();
+		
+		return exercice;
+	}
 	
-	public void addExercices(Exercice e) {
+	public void addExercices(Key<Exercice> e) {
 		exercices.add(e);
 	}
 	

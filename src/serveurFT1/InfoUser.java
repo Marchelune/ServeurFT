@@ -22,7 +22,7 @@ public class InfoUser extends HttpServlet {
 		PrintWriter out = reponse.getWriter();
 		if (id != null){
 			Serialiseur serialiseur = new Serialiseur();
-			out.print(serialiseur.serialise(id));
+			out.print(serialiseur.serialiseUser(id));
 		}
 		
 		

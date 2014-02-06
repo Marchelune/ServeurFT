@@ -36,6 +36,9 @@
 		<p>
 			<strong><%= user.getPrenom() %> <%= user.getNom() %></strong> est aussi inscrit, avec 
 			<%= user.getCoins() %> SportCoins. Id = <%= user.getId() %> <br />
+			<% if(user.getExercicesKeys().size() != 0) {%>
+			Le dernier sport de <%= user.getPrenom() %> était : <%= user.getExercice(0).getType() %> <br /> 
+			<% } %>
 		</p>
 		<%
 			}

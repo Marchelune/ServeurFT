@@ -2,21 +2,23 @@ package donnees;
 
 import java.util.Date;
 
-public class Exercice {
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-	private final Date date;
-	private final String type;
-	private final long duree;
-	private final int repetitions;
-	private final int coins;
+@Entity
+public class Exercice {
+	@Id Long id;
+	private Date date;
+	private String type;
+	private long duree;
+	private int repetitions;
+	private int coins;
 	
-	public Exercice(){
-		this.date = null;
-		this.type = null;
-		this.duree = 0;
-		this.repetitions = 0;
-		this.coins = 0;
+	public Long getId() {
+		return id;
 	}
+
+	public Exercice(){}
 	
 	public Exercice(Date date, String type, long duree, int repetitions, int coins) {
 		this.date = date;

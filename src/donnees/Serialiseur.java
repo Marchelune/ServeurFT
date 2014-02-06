@@ -16,8 +16,18 @@ public class Serialiseur {
 		
 	}
 	
-	public String serialise(String id) {
-		//Key<User> cleUser = Key.create(User.class, id);
+	public String serialiseExercice(Exercice e) {
+	
+		XStream xstream = new XStream(new DomDriver("UTF-8"));
+		xstream.alias("Exercice", Exercice.class);
+		String exerciceXml = xstream.toXML(e);
+
+		return exerciceXml;
+		
+	}
+	
+	
+	public String serialiseUser(String id) {
 		
 		User user = ofy().load().type(User.class).parent(KeyFactory.createKey("RepertoireUser", "RepertoireUser")).id(id).now();
 	

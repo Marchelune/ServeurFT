@@ -12,6 +12,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>InfoUser</servlet-name>
         <servlet-class>serveurFT1.InfoUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Nouvelexercice</servlet-name>
+        <servlet-class>serveurFT1.Nouvelexercice</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Nouvelexercice</servlet-name>
+        <url-pattern>/Nouvelexercice</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InfoUser</servlet-name>
         <url-pattern>/InfoUser</url-pattern>
