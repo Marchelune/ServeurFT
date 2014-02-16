@@ -1,10 +1,10 @@
 package donnees;
 
-import com.google.appengine.api.datastore.KeyFactory;
+import java.util.ArrayList;
+
 import com.googlecode.objectify.ObjectifyService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class Serialiseur {
 	static {
@@ -13,6 +13,16 @@ public class Serialiseur {
 	
 
 	public Serialiseur(){
+		
+	}
+	
+	public String serialiseExercice(ArrayList<Exercice> e) {
+		
+		XStream xstream = new XStream(new DomDriver("UTF-8"));
+		xstream.alias("Exercice", Exercice.class);
+		String exercicesXml = xstream.toXML(e);
+
+		return exercicesXml;
 		
 	}
 	
@@ -27,9 +37,8 @@ public class Serialiseur {
 	}
 	
 	
-	public String serialiseUser(String id) {
+	public String serialiseUser(User user) {
 		
-		User user = ofy().load().type(User.class).parent(KeyFactory.createKey("RepertoireUser", "RepertoireUser")).id(id).now();
 	
 		XStream xstream = new XStream(new DomDriver("UTF-8"));
 		xstream.alias("User", User.class);

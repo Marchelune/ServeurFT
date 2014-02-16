@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.googlecode.objectify.ObjectifyService;
 
+import donnees.InteractionObjectify;
 import donnees.User;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -42,7 +43,8 @@ public class ServeurFT1Servlet extends HttpServlet {
         	{
             User user = new User(req.getParameter("nom"), req.getParameter("prenom"), Integer.parseInt( req.getParameter("coins")));
             // Enregistrement de l'objet dans le Datastore avec Objectify
-            ofy().save().entity(user).now();
+            InteractionObjectify interaction = new InteractionObjectify();
+            interaction.saveUser(user);
         	}
 
             resp.sendRedirect("/");
