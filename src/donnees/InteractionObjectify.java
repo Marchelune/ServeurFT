@@ -21,6 +21,11 @@ public class InteractionObjectify {
 		return user;
 	}
 	
+	public User getUserByKey(Key<User> userKey) 
+	{
+		return ofy().load().key(userKey).now();
+	}
+	
 	public Exercice getExerciceByKey(Key<Exercice> exerciceKey)
 	{
 		Exercice exercice = ofy().load().key(exerciceKey).now();

@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
+import auth.TableSessions;
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;
 import donnees.User;
-
+import com.googlecode.objectify.Key;
 
 
 
@@ -22,12 +24,16 @@ public class InfoUser extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
 		reponse.setContentType("text/xml; charset=UTF-8");
-		String id = request.getParameter("id");
+		String s = request.getParameter("s");
 		PrintWriter out = reponse.getWriter();
 		Serialiseur serialiseur = new Serialiseur();
 		
+		TableSessions table = new TableSessions();
+		
+		Key <User> userKey = table.getSession(Long.parseLong(s)).getUserKey();
+		
 		InteractionObjectify interaction = new InteractionObjectify();
-		User user = interaction.getUserById(id);
+		User user = interaction.getUserByKey(userKey);
 		
 		out.print(serialiseur.serialiseUser(user));
 		

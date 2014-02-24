@@ -107,7 +107,21 @@ public class User implements UserInterface {
 		return tousexercices;
 	}
 	
-	public ArrayList<Exercice> getLastUnsynchronizedExercice() { //  renvoie les dernier exercices non synchronisés
+	public ArrayList<Exercice> getExerciceFromKToEnd(int k) { //  renvoie de k à la fin
+		ArrayList<Exercice> exercicesNonSynchro = new ArrayList<Exercice>();
+		InteractionObjectify interaction = new InteractionObjectify();
+		if (exercices.size() == 0){return null;};
+		for(int i = k +1  ; i <= this.exercices.size() -1; i++)
+		{
+			Key<Exercice> exerciceKey = exercices.get(i);
+			exercicesNonSynchro.add(interaction.getExerciceByKey(exerciceKey));
+		}
+		
+		
+		return exercicesNonSynchro;
+	}
+	
+	public ArrayList<Exercice> getLastUnsynchronizedExercice() { //  renvoie les derniers exercices non synchronisés
 		ArrayList<Exercice> exercicesNonSynchro = new ArrayList<Exercice>();
 		InteractionObjectify interaction = new InteractionObjectify();
 		if (exercices.size() == 0){return null;};
