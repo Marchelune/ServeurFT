@@ -10,11 +10,20 @@ import donnees.User;
 
 @Entity
 @Cache
-public abstract class Session {
+public class Session {
 	
-	@Id private long id; //à renvoyer dans les requêtes
+	@Id private Long id; //à renvoyer dans les requêtes TODO long ou Long ?
 	private Key<User> userKey;
+	private int lastUpdatedExercice;
 	
+	public Session(){} 
+	
+	public int getLastUpdatedExercice() {
+		return lastUpdatedExercice;
+	}
+	public void setLastUpdatedExercice(int lastUpdatedExercice) {
+		this.lastUpdatedExercice = lastUpdatedExercice;
+	}
 	
 	public long getId() {
 		return id;
@@ -23,9 +32,9 @@ public abstract class Session {
 		return userKey;
 	}
 	
-	public Session(long id, Key<User> userKey) {
-		this.id = id;
+	public Session( Key<User> userKey) {
 		this.userKey = userKey;
+		lastUpdatedExercice = -1;
 	}
 	
 	

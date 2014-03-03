@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 
 
+import java.util.Date;
+
 import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
@@ -19,26 +21,38 @@ import com.googlecode.objectify.annotation.Parent;
 @Cache
 public class User implements UserInterface {
 	
-	@Parent private transient com.google.appengine.api.datastore.Key parent;   // clé type Datastore
+	@Parent private transient Key parent; 
 	@Id private String id;
 	private String nom;
 	private String prenom;
-	private transient int lastUpdate;
+	private Date inscription;
 	@Index private int coins;
 	private ArrayList<String> friends;
+	private transient String password;
 	private transient ArrayList<Key<Exercice>> exercices = new ArrayList<Key<Exercice>>();   // clé objectify
 	
 	
 	public User(){};
 	
-	public User(String nom, String prenom, int coins ) {
+	public User(String nom, String prenom , String pass) {
 		this.nom = nom;
 		this.prenom = prenom;
-		this.coins = coins;
-		this.parent = KeyFactory.createKey("RepertoireUser", "RepertoireUser");
+		this.coins = 0;
+		this.parent = Key.create(User.class, "registre");     // KeyFactory.createKey("RepertoireUser", "RepertoireUser");
 		id = prenom+nom+ (int) (Math.random()*100);
-		lastUpdate = -1;
+		inscription = new Date();
+		password = "ZSS3q2b65m"+ pass + id;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public Key<User> getKey(){
+		
+		return Key.create(parent, User.class, id); 
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -102,8 +116,6 @@ public class User implements UserInterface {
 			tousexercices.add(interaction.getExerciceByKey(exerciceKey));
 		}
 		
-		lastUpdate = this.exercices.size()-1;
-		
 		return tousexercices;
 	}
 	
@@ -111,30 +123,14 @@ public class User implements UserInterface {
 		ArrayList<Exercice> exercicesNonSynchro = new ArrayList<Exercice>();
 		InteractionObjectify interaction = new InteractionObjectify();
 		if (exercices.size() == 0){return null;};
-		for(int i = k +1  ; i <= this.exercices.size() -1; i++)
+		for(int i = k  ; i <= this.exercices.size() -1; i++)
 		{
 			Key<Exercice> exerciceKey = exercices.get(i);
 			exercicesNonSynchro.add(interaction.getExerciceByKey(exerciceKey));
 		}
-		
-		
 		return exercicesNonSynchro;
 	}
 	
-	public ArrayList<Exercice> getLastUnsynchronizedExercice() { //  renvoie les derniers exercices non synchronisés
-		ArrayList<Exercice> exercicesNonSynchro = new ArrayList<Exercice>();
-		InteractionObjectify interaction = new InteractionObjectify();
-		if (exercices.size() == 0){return null;};
-		for(int i = lastUpdate +1  ; i <= this.exercices.size() -1; i++)
-		{
-			Key<Exercice> exerciceKey = exercices.get(i);
-			exercicesNonSynchro.add(interaction.getExerciceByKey(exerciceKey));
-		}
-		
-		lastUpdate = this.exercices.size()-1;
-		
-		return exercicesNonSynchro;
-	}
 	
 	public void addExercices(Key<Exercice> e) {
 		exercices.add(e);

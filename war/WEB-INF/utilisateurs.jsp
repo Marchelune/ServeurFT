@@ -21,7 +21,7 @@
 				<label>Votre prénom : <input type="text" name="prenom" /></label>
 			</p>
 			<p>
-				<label>Votre nombre initial de SportCoins : <input type=number name="coins" /></label>
+				<label>Votre mot de passe : <input type="password" name="password" /></label>
 			</p>
 			<p>
 				<input type="submit" />

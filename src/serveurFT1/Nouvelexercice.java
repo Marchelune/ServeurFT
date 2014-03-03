@@ -17,6 +17,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 import donnees.Exercice;
+import donnees.InteractionObjectify;
 import donnees.User;
 
 @SuppressWarnings("serial")
@@ -45,7 +46,8 @@ public class Nouvelexercice extends HttpServlet {
 		String id = req.getParameter("id");
     	if(id != null)
     	{
-    		User user = ofy().load().type(User.class).parent(KeyFactory.createKey("RepertoireUser", "RepertoireUser")).id(id).now();
+    		InteractionObjectify interaction = new InteractionObjectify();
+    		User user = interaction.getUserById(id);
     		if (user != null)
     		{
     			if(req.getParameter("date") != null){

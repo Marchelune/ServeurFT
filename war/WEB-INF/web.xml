@@ -9,6 +9,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-class>serveurFT1.ServeurFT1Servlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Authentificaton</servlet-name>
+        <servlet-class>serveurFT1.Authentificaton</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>InfoUser</servlet-name>
         <servlet-class>serveurFT1.InfoUser</servlet-class>
     </servlet>
@@ -27,6 +31,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-mapping>
         <servlet-name>Nouvelexercice</servlet-name>
         <url-pattern>/Nouvelexercice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Authentificaton</servlet-name>
+        <url-pattern>/Auth</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InfoUser</servlet-name>

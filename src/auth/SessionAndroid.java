@@ -10,23 +10,13 @@ import donnees.User;
 @EntitySubclass
 public class SessionAndroid extends Session {
 	
-	private int lastUpdatedExercice;
+	
 	private Date dateExp; //date à partir de laquelle la session n'est plus sensée exister
 	
 	
-	public SessionAndroid(long id, Key<User> userKey, int lastUpdate, Date dateExp) {
-		super(id, userKey);
-		this.lastUpdatedExercice = lastUpdate;
+	public SessionAndroid( Key<User> userKey, Date dateExp) {
+		super( userKey);
 		this.dateExp = dateExp;
-	}
-
-	public int getLastUpdatedExercice() {
-		return lastUpdatedExercice;
-	}
-
-
-	public void setLastUpdatedExercice(int lastUpdatedExercice) {
-		this.lastUpdatedExercice = lastUpdatedExercice;
 	}
 
 

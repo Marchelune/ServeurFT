@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+import com.googlecode.objectify.Key;
+
+import auth.Session;
+import auth.TableSessions;
 import donnees.Exercice;
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;
@@ -26,28 +33,37 @@ public class InfoExercices extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
 		reponse.setContentType("text/xml; charset=UTF-8");
-		String id = request.getParameter("id");
+		String s = request.getParameter("session");
 		String querie = request.getParameter("q");
 		PrintWriter out = reponse.getWriter();
 		Serialiseur serialiseur = new Serialiseur();
 		
-		InteractionObjectify interaction = new InteractionObjectify();
-		User user = interaction.getUserById(id);
-		
-		ArrayList<Exercice> exercices = new ArrayList<Exercice>();
+		//Authentification
+		TableSessions table = new TableSessions();
+		Session session = table.getSession(Long.parseLong(s));
+		if (session != null){
+			Key<User> userKey = session.getUserKey();
+			InteractionObjectify interaction = new InteractionObjectify();
+			User user = interaction.getUserByKey(userKey);
 
-		if ( querie.equals("synchro")){
-			exercices = user.getLastUnsynchronizedExercice();
-			out.print(serialiseur.serialiseExercice(exercices));
-			interaction.saveUser(user);
+			ArrayList<Exercice> exercices = new ArrayList<Exercice>();
+
+			if ( querie.equals("synchro")){
+				exercices = user.getExerciceFromKToEnd(session.getLastUpdatedExercice()+1);
+				out.print(serialiseur.serialiseExercice(exercices));
+				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
+				interaction.saveUser(user);
+				table.saveSession(session);
+			}
+			if ( querie.equals("reset")){
+				exercices = user.getAllExercices();
+				out.print(serialiseur.serialiseExercice(exercices));
+				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
+				interaction.saveUser(user);
+				table.saveSession(session);
+			}
 		}
-		if ( querie.equals("reset")){
-			exercices = user.getAllExercices();
-			out.print(serialiseur.serialiseExercice(exercices));
-			interaction.saveUser(user);
-		}
-		
-		
+
 		
 		
 	}

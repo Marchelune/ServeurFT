@@ -1,8 +1,8 @@
 package donnees;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+import auth.Session;
 
-import com.google.appengine.api.datastore.KeyFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
@@ -11,13 +11,14 @@ public class InteractionObjectify {
 	static {
         ObjectifyService.register(User.class);
         ObjectifyService.register(Exercice.class);
+        ObjectifyService.register(Session.class);
     }
 
 	public InteractionObjectify(){};
 	
 	public User getUserById(String id)
 	{
-		User user = ofy().load().type(User.class).parent(KeyFactory.createKey("RepertoireUser", "RepertoireUser")).id(id).now();
+		User user = ofy().load().type(User.class).parent(Key.create(User.class, "registre")).id(id).now();
 		return user;
 	}
 	
@@ -36,6 +37,17 @@ public class InteractionObjectify {
 	{
 		ofy().save().entity(user).now();
 	}
+	
+	
+	public void saveSession(Session session)
+	{
+		ofy().save().entity(session).now();
+	}
+	
+	public Session getSession(long id) {
+		return ofy().load().type(Session.class).id(id).now();
+	}
+	
 	
 	public void saveExercice(Exercice exercice)
 	{

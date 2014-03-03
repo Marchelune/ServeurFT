@@ -10,10 +10,12 @@ import donnees.User;
 @EntitySubclass
 public class SessionAdmin extends Session {
 
-	public SessionAdmin(long id, Key<User> userKey) {
-		super(id, userKey);
-
+	public SessionAdmin(Key<User> userKey) {
+		super(userKey);
+		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 	

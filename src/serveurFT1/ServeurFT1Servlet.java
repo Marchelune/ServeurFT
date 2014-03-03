@@ -16,9 +16,11 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @SuppressWarnings("serial")
 public class ServeurFT1Servlet extends HttpServlet {
+	
 	static {
         ObjectifyService.register(User.class);
-    }
+	}
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		try
@@ -39,9 +41,9 @@ public class ServeurFT1Servlet extends HttpServlet {
         try {
         	req.setCharacterEncoding("UTF-8");
             // Création de l'objet
-        	if(req.getParameter("nom") != null && req.getParameter("prenom") != null && Integer.parseInt( req.getParameter("coins")) >= 0)
+        	if(req.getParameter("nom") != null && req.getParameter("prenom") != null && req.getParameter("password") != null)
         	{
-            User user = new User(req.getParameter("nom"), req.getParameter("prenom"), Integer.parseInt( req.getParameter("coins")));
+            User user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"));
             // Enregistrement de l'objet dans le Datastore avec Objectify
             InteractionObjectify interaction = new InteractionObjectify();
             interaction.saveUser(user);

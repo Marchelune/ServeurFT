@@ -24,8 +24,8 @@ public class SessionKinect extends Session {
 	}
 
 
-	public SessionKinect(long id, Key<User> userKey, int idMachine, Date dateExp) {
-		super(id, userKey);
+	public SessionKinect(Key<User> userKey, int idMachine, Date dateExp) {
+		super( userKey);
 		this.idMachine = idMachine;
 		this.dateExp = dateExp;
 	}
