@@ -5,13 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Connexion à FitTogether</title>
+ <link rel="stylesheet" type="text/css" href="CSS/style.css" />
 </head>
+
 <body>
 
-<h1>Inscrivez-vous sur l'application FitTogether !</h1>
+<h1>Connectez-vous à l'application FitTogether !</h1>
 
 	<form action="/Auth" method="post" class="login">
-    <p><label>Identifiant : <input type="text" name="id" /></label></p>
+    <p><label>Identifiant (email) : <input type="email" name="id" /></label></p>
 
     <p><label>Mot de passe : <input type="password" name="password" id="password" value="password" /></label></p>
 
@@ -21,7 +23,6 @@
     
   </form>
 
-
-
 </body>
+
 </html>

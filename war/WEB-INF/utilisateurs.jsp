@@ -21,6 +21,9 @@
 				<label>Votre prénom : <input type="text" name="prenom" /></label>
 			</p>
 			<p>
+				<label>Votre email : <input type="email" name="id" /></label>
+			</p>
+			<p>
 				<label>Votre mot de passe : <input type="password" name="password" /></label>
 			</p>
 			<p>

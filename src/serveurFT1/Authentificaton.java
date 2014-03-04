@@ -1,10 +1,8 @@
 package serveurFT1;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,9 +47,9 @@ public class Authentificaton extends HttpServlet {
         				Session session = new Session(user.getKey());
         				interaction.saveSession(session);
         				out.print(session.getId());
-        			}else{resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);} // erreur 401
-        		}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND );}  // erreur 404
-        	}else{resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);}   //erreur 401
+        			}else{out.print("401");} // sendError(HttpServletResponse.SC_UNAUTHORIZED)
+        		}else{out.print("404");}  // resp.sendError(HttpServletResponse.SC_NOT_FOUND );
+        	}else{out.print("401");}   //erreur 401
 
         } catch (IOException e) {
             e.printStackTrace();

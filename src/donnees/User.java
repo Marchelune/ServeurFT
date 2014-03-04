@@ -34,12 +34,12 @@ public class User implements UserInterface {
 	
 	public User(){};
 	
-	public User(String nom, String prenom , String pass) {
+	public User(String nom, String prenom , String pass, String id) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.coins = 0;
 		this.parent = Key.create(User.class, "registre");     // KeyFactory.createKey("RepertoireUser", "RepertoireUser");
-		id = prenom+nom+ (int) (Math.random()*100);
+		this.id = id;
 		this.inscription = new Date();
 		password = "ZSS3q2b65m"+ pass + id;
 	}
