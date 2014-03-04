@@ -27,7 +27,7 @@ public class Nouvelexercice extends HttpServlet {
         ObjectifyService.register(User.class);
     }
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) //affiche la page de simulation d'un nouvel exercice
 			throws IOException {
 		try
 		{

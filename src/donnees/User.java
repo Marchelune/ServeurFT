@@ -40,7 +40,7 @@ public class User implements UserInterface {
 		this.coins = 0;
 		this.parent = Key.create(User.class, "registre");     // KeyFactory.createKey("RepertoireUser", "RepertoireUser");
 		id = prenom+nom+ (int) (Math.random()*100);
-		inscription = new Date();
+		this.inscription = new Date();
 		password = "ZSS3q2b65m"+ pass + id;
 	}
 	
@@ -135,6 +135,13 @@ public class User implements UserInterface {
 	public void addExercices(Key<Exercice> e) {
 		exercices.add(e);
 	}
+
+	
+	public Date getInscription() {
+		return inscription;
+	}
+
+	
 	
 
 	

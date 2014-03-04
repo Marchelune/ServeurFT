@@ -42,7 +42,6 @@ public class Authentificaton extends HttpServlet {
         	InteractionObjectify interaction = new InteractionObjectify();
         	if(id != null && pass != null)
         	{
-        		//TableSessions table = new TableSessions();
         		User user = interaction.getUserById(id);
         		if (user != null){
         			String passwordCrypte = "ZSS3q2b65m"+ pass + id;
@@ -50,9 +49,9 @@ public class Authentificaton extends HttpServlet {
         				Session session = new Session(user.getKey());
         				interaction.saveSession(session);
         				out.print(session.getId());
-        			}else{out.print("0");}
-        		}else{out.print("0");}
-        	}else{out.print("0");}
+        			}else{resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);} // erreur 401
+        		}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND );}  // erreur 404
+        	}else{resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);}   //erreur 401
 
         } catch (IOException e) {
             e.printStackTrace();

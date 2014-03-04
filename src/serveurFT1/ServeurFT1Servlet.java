@@ -41,7 +41,7 @@ public class ServeurFT1Servlet extends HttpServlet {
         try {
         	req.setCharacterEncoding("UTF-8");
             // Création de l'objet
-        	if(req.getParameter("nom") != null && req.getParameter("prenom") != null && req.getParameter("password") != null)
+        	if(req.getParameter("nom") != "" && req.getParameter("prenom") != "" && req.getParameter("password") != "")
         	{
             User user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"));
             // Enregistrement de l'objet dans le Datastore avec Objectify
