@@ -46,8 +46,7 @@ public class Authentificaton extends HttpServlet {
         		if (user != null){
         			String passwordCrypte = Md5.encode("ZSS3q2b65m"+ pass + id);
         			if(passwordCrypte.equals(user.getPassword())){
-        				Session session = new Session(user.getKey());
-        				TableSessions.saveSession(session);
+        				Session session = TableSessions.newSession(user); 
         				out.print(session.getId());
         			}else{out.print("401");} // sendError(HttpServletResponse.SC_UNAUTHORIZED)
         		}else{out.print("404");}  // resp.sendError(HttpServletResponse.SC_NOT_FOUND );

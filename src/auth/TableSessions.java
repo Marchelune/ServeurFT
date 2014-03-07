@@ -5,6 +5,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import com.googlecode.objectify.ObjectifyService;
 
+import donnees.User;
+
 
 public class TableSessions {
 
@@ -21,6 +23,11 @@ public class TableSessions {
 		ofy().save().entity(session).now();
 	}
 	
+	public static Session newSession(User user){
+		Session session = new Session(user.getKey());
+		ofy().save().entity(session).now();
+		return session;
+	}
 	public static Session getSession(String id) {
 		return ofy().load().type(Session.class).id(id).now();
 	}
