@@ -15,14 +15,13 @@ public class TableSessions {
 //        ObjectifyService.register(SessionKinect.class);
 	}
 	
-	public TableSessions(){}
 	
-	public void saveSession(Session session)
+	public static void saveSession(Session session)
 	{
 		ofy().save().entity(session).now();
 	}
 	
-	public Session getSession(long id) {
+	public static Session getSession(String id) {
 		return ofy().load().type(Session.class).id(id).now();
 	}
 	

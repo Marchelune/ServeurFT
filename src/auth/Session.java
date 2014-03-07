@@ -1,6 +1,8 @@
 package auth;
 
 
+import java.util.UUID;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -12,7 +14,7 @@ import donnees.User;
 @Cache
 public class Session {
 	
-	@Id private Long id; //à renvoyer dans les requêtes TODO long ou Long ?
+	@Id private String id; //à renvoyer dans les requêtes 
 	private Key<User> userKey;
 	private int lastUpdatedExercice;
 	
@@ -25,7 +27,7 @@ public class Session {
 		this.lastUpdatedExercice = lastUpdatedExercice;
 	}
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 	public Key<User> getUserKey() {
@@ -35,6 +37,7 @@ public class Session {
 	public Session( Key<User> userKey) {
 		this.userKey = userKey;
 		lastUpdatedExercice = -1;
+		id = UUID.randomUUID().toString();
 	}
 	
 	

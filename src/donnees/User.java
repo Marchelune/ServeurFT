@@ -1,13 +1,13 @@
 package donnees;
 
 import java.util.ArrayList;
-
-
-
-
 import java.util.Date;
 
+import auth.Md5;
+
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.images.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -30,6 +30,8 @@ public class User implements UserInterface {
 	private ArrayList<String> friends;
 	private transient String password;
 	private transient ArrayList<Key<Exercice>> exercices = new ArrayList<Key<Exercice>>();   // clé objectify
+	private transient BlobKey clePhoto;
+	private String urlPhoto;
 	
 	
 	public User(){};
@@ -41,9 +43,26 @@ public class User implements UserInterface {
 		this.parent = Key.create(User.class, "registre");     // KeyFactory.createKey("RepertoireUser", "RepertoireUser");
 		this.id = id;
 		this.inscription = new Date();
-		password = "ZSS3q2b65m"+ pass + id;
+		password = Md5.encode("ZSS3q2b65m"+ pass + id);
 	}
 	
+	public User(String nom, String prenom , String pass, String id, BlobKey key) {
+		this(nom, prenom, pass, id);
+		clePhoto = key;
+		ImagesService imagesService = ImagesServiceFactory.getImagesService();
+		ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(key);
+		urlPhoto = imagesService.getServingUrl(options);
+	}
+	
+	
+	public BlobKey getClePhoto() {
+		return clePhoto;
+	}
+
+	public String getUrlPhoto() {
+		return urlPhoto;
+	}
+
 	public String getPassword() {
 		return password;
 	}

@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.googlecode.objectify.Key;
 
+import auth.Md5;
 import auth.Session;
+import auth.TableSessions;
 import donnees.InteractionObjectify;
 import donnees.User;
 
@@ -38,14 +40,14 @@ public class Authentificaton extends HttpServlet {
         	String id = req.getParameter("id");
         	String pass = req.getParameter("password");
         	InteractionObjectify interaction = new InteractionObjectify();
-        	if(id != null && pass != null)
+        	if(id != "" && pass != "")
         	{
         		User user = interaction.getUserById(id);
         		if (user != null){
-        			String passwordCrypte = "ZSS3q2b65m"+ pass + id;
+        			String passwordCrypte = Md5.encode("ZSS3q2b65m"+ pass + id);
         			if(passwordCrypte.equals(user.getPassword())){
         				Session session = new Session(user.getKey());
-        				interaction.saveSession(session);
+        				TableSessions.saveSession(session);
         				out.print(session.getId());
         			}else{out.print("401");} // sendError(HttpServletResponse.SC_UNAUTHORIZED)
         		}else{out.print("404");}  // resp.sendError(HttpServletResponse.SC_NOT_FOUND );

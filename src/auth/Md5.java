@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Md5 {
 
-	private static String encode(String password)
+	public static String encode(String password)
     {
         byte[] uniqueKey = password.getBytes();
         byte[] hash      = null;

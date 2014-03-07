@@ -33,14 +33,13 @@ public class InfoExercices extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
 		reponse.setContentType("text/xml; charset=UTF-8");
-		String s = request.getParameter("session");
+		String s = request.getParameter("session"); //identifiant de la session (UUID)
 		String querie = request.getParameter("q");
 		PrintWriter out = reponse.getWriter();
 		Serialiseur serialiseur = new Serialiseur();
 		
 		//Authentification
-		TableSessions table = new TableSessions();
-		Session session = table.getSession(Long.parseLong(s));
+		Session session = TableSessions.getSession(s);
 		if (session != null){
 			Key<User> userKey = session.getUserKey();
 			InteractionObjectify interaction = new InteractionObjectify();
@@ -53,14 +52,14 @@ public class InfoExercices extends HttpServlet {
 				out.print(serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
 				interaction.saveUser(user);
-				table.saveSession(session);
+				TableSessions.saveSession(session);
 			}
 			if ( querie.equals("reset")){
 				exercices = user.getAllExercices();
 				out.print(serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
 				interaction.saveUser(user);
-				table.saveSession(session);
+				TableSessions.saveSession(session);
 			}
 		}
 

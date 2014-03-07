@@ -39,14 +39,7 @@ public class InteractionObjectify {
 	}
 	
 	
-	public void saveSession(Session session)
-	{
-		ofy().save().entity(session).now();
-	}
 	
-	public Session getSession(long id) {
-		return ofy().load().type(Session.class).id(id).now();
-	}
 	
 	
 	public void saveExercice(Exercice exercice)
