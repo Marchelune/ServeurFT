@@ -20,7 +20,8 @@ import donnees.Exercice;
 import donnees.InteractionObjectify;
 import donnees.User;
 
-@SuppressWarnings("serial")
+@SuppressWarnings("serial") //Service qui permet d'ajouter un exercice à l'historique d'un utilisateur. Ceci n'est pas une version définitive
+							// mais elle permet de simuler l'ajout d'un exercice par la station kinect.
 public class Nouvelexercice extends HttpServlet {
 	
 	static {
@@ -46,8 +47,7 @@ public class Nouvelexercice extends HttpServlet {
 		String id = req.getParameter("id");
     	if(id != null)
     	{
-    		InteractionObjectify interaction = new InteractionObjectify();
-    		User user = interaction.getUserById(id);
+    		User user = InteractionObjectify.getUserById(id);
     		if (user != null)
     		{
     			if(req.getParameter("date") != null){

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.googlecode.objectify.Key;
-
 import auth.Md5;
 import auth.Session;
 import auth.TableSessions;
@@ -39,10 +37,9 @@ public class Authentificaton extends HttpServlet {
         	PrintWriter out = resp.getWriter();
         	String id = req.getParameter("id");
         	String pass = req.getParameter("password");
-        	InteractionObjectify interaction = new InteractionObjectify();
         	if(id != "" && pass != "")
         	{
-        		User user = interaction.getUserById(id);
+        		User user = InteractionObjectify.getUserById(id);
         		if (user != null){
         			String passwordCrypte = Md5.encode("ZSS3q2b65m"+ pass + id);
         			if(passwordCrypte.equals(user.getPassword())){

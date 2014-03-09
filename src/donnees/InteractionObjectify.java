@@ -14,26 +14,25 @@ public class InteractionObjectify {
         ObjectifyService.register(Session.class);
     }
 
-	public InteractionObjectify(){};
 	
-	public User getUserById(String id)
+	public static User getUserById(String id)
 	{
 		User user = ofy().load().type(User.class).parent(Key.create(User.class, "registre")).id(id).now();
 		return user;
 	}
 	
-	public User getUserByKey(Key<User> userKey) 
+	public static User getUserByKey(Key<User> userKey) 
 	{
 		return ofy().load().key(userKey).now();
 	}
 	
-	public Exercice getExerciceByKey(Key<Exercice> exerciceKey)
+	public static Exercice getExerciceByKey(Key<Exercice> exerciceKey)
 	{
 		Exercice exercice = ofy().load().key(exerciceKey).now();
 		return exercice;
 	}
 	
-	public void saveUser(User user)
+	public static void saveUser(User user)
 	{
 		ofy().save().entity(user).now();
 	}
@@ -42,7 +41,7 @@ public class InteractionObjectify {
 	
 	
 	
-	public void saveExercice(Exercice exercice)
+	public static void saveExercice(Exercice exercice)
 	{
 		ofy().save().entity(exercice).now();
 	}

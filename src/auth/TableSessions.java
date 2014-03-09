@@ -23,6 +23,11 @@ public class TableSessions {
 		ofy().save().entity(session).now();
 	}
 	
+	public static void deleteSession(Session session)
+	{
+		ofy().delete().entity(session).now();
+	}
+	
 	public static Session newSession(User user){
 		Session session = new Session(user.getKey());
 		ofy().save().entity(session).now();

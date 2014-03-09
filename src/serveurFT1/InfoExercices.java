@@ -42,8 +42,7 @@ public class InfoExercices extends HttpServlet {
 		Session session = TableSessions.getSession(s);
 		if (session != null){
 			Key<User> userKey = session.getUserKey();
-			InteractionObjectify interaction = new InteractionObjectify();
-			User user = interaction.getUserByKey(userKey);
+			User user = InteractionObjectify.getUserByKey(userKey);
 
 			ArrayList<Exercice> exercices = new ArrayList<Exercice>();
 
@@ -51,14 +50,14 @@ public class InfoExercices extends HttpServlet {
 				exercices = user.getExerciceFromKToEnd(session.getLastUpdatedExercice()+1);
 				out.print(serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
-				interaction.saveUser(user);
+				InteractionObjectify.saveUser(user);
 				TableSessions.saveSession(session);
 			}
 			if ( querie.equals("reset")){
 				exercices = user.getAllExercices();
 				out.print(serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
-				interaction.saveUser(user);
+				InteractionObjectify.saveUser(user);
 				TableSessions.saveSession(session);
 			}
 		}

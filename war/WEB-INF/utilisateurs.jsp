@@ -16,16 +16,17 @@
 		<meta charset="utf-8" />
 	</head>
 
-	<body bgcolor="#00CC00">
+	<body bgcolor="#BEFED1">
 		<h1>Inscrivez-vous sur l'application FitTogether !</h1>
 		
 		
 		<form action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
-			<p>
-				<label>Votre nom : <input type="text" name="nom" required /></label>
-			</p>
+			
 			<p>
 				<label>Votre prénom : <input type="text" name="prenom" required /></label>
+			</p>
+			<p>
+				<label>Votre nom : <input type="text" name="nom" required /></label>
 			</p>
 			<p>
 				<label>Votre email : <input type="email" name="id" required /></label>

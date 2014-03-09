@@ -27,8 +27,7 @@ public class InfoUser extends HttpServlet {
 		Serialiseur serialiseur = new Serialiseur();
 		
 		
-		InteractionObjectify interaction = new InteractionObjectify();
-		User user = interaction.getUserById(id);
+		User user = InteractionObjectify.getUserById(id);
 		
 		out.print(serialiseur.serialiseUser(user));
 		
