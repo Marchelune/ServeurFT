@@ -16,7 +16,7 @@ import donnees.InteractionObjectify;
 import donnees.User;
 
 @SuppressWarnings("serial")
-public class Authentificaton extends HttpServlet {
+public class Authentificaton extends HttpServlet { //ouverture de session. TODO : ajouter un paramètre pour créer différents type de session
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.blobstore.*;
-import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 import donnees.InteractionObjectify;

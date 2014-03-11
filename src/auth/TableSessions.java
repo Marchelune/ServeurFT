@@ -8,7 +8,7 @@ import com.googlecode.objectify.ObjectifyService;
 import donnees.User;
 
 
-public class TableSessions {
+public class TableSessions {    //gère la création, l'accès et la supression de sessions
 
 	static {
 		ObjectifyService.register(Session.class);

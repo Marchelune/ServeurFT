@@ -1,22 +1,14 @@
 package donnees;
 
 import java.util.ArrayList;
-
-import com.googlecode.objectify.ObjectifyService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class Serialiseur {
-	static {
-        ObjectifyService.register(User.class);
-    }
 	
-
-	public Serialiseur(){
-		
-	}
 	
-	public String serialiseExercice(ArrayList<Exercice> e) {
+	
+	public static String serialiseExercice(ArrayList<Exercice> e) {
 		
 		XStream xstream = new XStream(new DomDriver("UTF-8"));
 		xstream.alias("Exercice", Exercice.class);
@@ -26,7 +18,7 @@ public class Serialiseur {
 		
 	}
 	
-	public String serialiseExercice(Exercice e) {
+	public static String serialiseExercice(Exercice e) {
 	
 		XStream xstream = new XStream(new DomDriver("UTF-8"));
 		xstream.alias("Exercice", Exercice.class);
@@ -37,7 +29,7 @@ public class Serialiseur {
 	}
 	
 	
-	public String serialiseUser(User user) {
+	public static String serialiseUser(User user) {
 		
 	
 		XStream xstream = new XStream(new DomDriver("UTF-8"));

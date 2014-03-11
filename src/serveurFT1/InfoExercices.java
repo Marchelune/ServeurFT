@@ -36,7 +36,6 @@ public class InfoExercices extends HttpServlet {
 		String s = request.getParameter("session"); //identifiant de la session (UUID)
 		String querie = request.getParameter("q");
 		PrintWriter out = reponse.getWriter();
-		Serialiseur serialiseur = new Serialiseur();
 		
 		//Authentification
 		Session session = TableSessions.getSession(s);
@@ -48,14 +47,14 @@ public class InfoExercices extends HttpServlet {
 
 			if ( querie.equals("synchro")){
 				exercices = user.getExerciceFromKToEnd(session.getLastUpdatedExercice()+1);
-				out.print(serialiseur.serialiseExercice(exercices));
+				out.print(Serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
 				InteractionObjectify.saveUser(user);
 				TableSessions.saveSession(session);
 			}
 			if ( querie.equals("reset")){
 				exercices = user.getAllExercices();
-				out.print(serialiseur.serialiseExercice(exercices));
+				out.print(Serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
 				InteractionObjectify.saveUser(user);
 				TableSessions.saveSession(session);

@@ -18,18 +18,17 @@ import donnees.User;
 
 
 @SuppressWarnings("serial")
-public class InfoUser extends HttpServlet {
+public class InfoUser extends HttpServlet {  //fournit les informations basiques d'un utilisateur en XML
 
 	public void doGet( HttpServletRequest request, HttpServletResponse reponse ) throws ServletException, IOException{
 		reponse.setContentType("text/xml; charset=UTF-8");
 		String id = request.getParameter("id");
 		PrintWriter out = reponse.getWriter();
-		Serialiseur serialiseur = new Serialiseur();
 		
 		
 		User user = InteractionObjectify.getUserById(id);
 		
-		out.print(serialiseur.serialiseUser(user));
+		out.print(Serialiseur.serialiseUser(user));
 		
 		
 		
