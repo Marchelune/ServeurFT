@@ -27,7 +27,7 @@ public class User implements UserInterface {
 	private String prenom;
 	private Date inscription;
 	@Index private int coins;
-	private ArrayList<String> friends;
+	private ArrayList<String> friends = new ArrayList<String>();
 	private transient String password;
 	private transient ArrayList<Key<Exercice>> exercices = new ArrayList<Key<Exercice>>();   // clé objectify
 	private transient BlobKey clePhoto;
@@ -40,7 +40,7 @@ public class User implements UserInterface {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.coins = 0;
-		this.parent = Key.create(User.class, "registre");     // KeyFactory.createKey("RepertoireUser", "RepertoireUser");
+		this.parent = Key.create(User.class, "registre");     // permet à toutes les entités de type User d'avoir un même parent "artificiel" registre, ce qui optimise le temps de chargement
 		this.id = id;
 		this.inscription = new Date();
 		password = Md5.encode("ZSS3q2b65m"+ pass + id);
