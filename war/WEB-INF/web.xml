@@ -9,6 +9,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-class>serveurFT1.ServeurFT1Servlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TestUpload</servlet-name>
+        <servlet-class>test.TestUpload</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Friends</servlet-name>
         <servlet-class>serveurFT1.Friends</servlet-class>
     </servlet>
@@ -35,6 +39,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>TestUpload</servlet-name>
+        <url-pattern>/TestUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InfoExercices</servlet-name>

@@ -13,33 +13,39 @@
 <html>
 	<head>
 		<title>FitTogether</title>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 
-	<body bgcolor="#BEFED1">
+	<body >
 		<h1>Inscrivez-vous sur l'application FitTogether !</h1>
 		
 		
-		<form action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
-			
+		<form action="<%= blobstoreService.createUploadUrl("/upload") %> " method="post" enctype="multipart/form-data">
+			<fieldset>
 			<p>
-				<label>Votre prénom : <input type="text" name="prenom" required /></label>
+				<label for="prenom">Votre prénom :</label>
+   				<input type="text" name="prenom" size="20" maxlength="70" required id="prenom"  />
 			</p>
 			<p>
-				<label>Votre nom : <input type="text" name="nom" required /></label>
+				<label for="nom">Votre nom :</label>
+   				<input type="text" name="nom" size="20" maxlength="70" required id="nom" />
 			</p>
 			<p>
-				<label>Votre email : <input type="email" name="id" required /></label>
+				<label for="email">Votre email :</label>
+   				<input type="email" name="id" size="20" maxlength="40" id="email" required  />
 			</p>
 			<p>
 				<label>Choisissez une photo de profil : <input type="file" name="photo" /></label>
 			</p>
 			<p>
-				<label>Votre mot de passe : <input type="password" name="password" required /></label>
+				<label for="password">Votre mot de passe  :</label>
+   				<input type="password" name="password" required size="20"   id="password"/>
 			</p>
 			<p>
 				<input type="submit" />
 			</p>
+			</fieldset>
 		</form>
 	
 		<h1>Ils sont aussi inscrits sur FitTogether :</h1>
@@ -47,6 +53,7 @@
 			List<User> users = (List<User>) request.getAttribute("users");
 			for (User user : users) {
 		%>
+		
 		<p>
 			<% if(user.getUrlPhoto() != null ) {%>
 			<img src="<%=user.getUrlPhoto()%>" alt="Image utilisateur" class="img-polaroid" style="max-width: 100px;" />
@@ -57,6 +64,7 @@
 			Le dernier sport de <%= user.getPrenom() %> était : <%= user.getExercice(0).getType() %> <br /> 
 			<% } %>
 		</p>
+		
 		<%
 			}
 		%>
