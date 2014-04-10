@@ -36,6 +36,8 @@ public class Authentificaton extends HttpServlet { //ouverture de session. TODO 
         	req.setCharacterEncoding("UTF-8");
         	PrintWriter out = resp.getWriter();
         	String id = req.getParameter("id");
+        	String type = req.getParameter("type");
+        	String idMachine = req.getParameter("m");
         	String pass = req.getParameter("password");
         	if(id != "" && pass != "")
         	{
@@ -43,14 +45,25 @@ public class Authentificaton extends HttpServlet { //ouverture de session. TODO 
         		if (user != null){
         			String passwordCrypte = Md5.encode("ZSS3q2b65m"+ pass + id);
         			if(passwordCrypte.equals(user.getPassword())){
-        				Session session = TableSessions.newSession(user); 
-        				out.print(session.getId());
-        			}else{out.print("401");} // sendError(HttpServletResponse.SC_UNAUTHORIZED)
+
+        				if(idMachine != null && type.equals("kinect")){
+        					Session session = TableSessions.newKinectSession(user, idMachine);
+        					out.print(session.getId());
+        				}
+        				else if (idMachine == null && type.equals("kinect")) {
+        					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        				}else{
+        					Session session = TableSessions.newSession(user); 
+        					out.print(session.getId());
+        				}
+
+
+        			}else{out.print("401");} // resp.sendError(HttpServletResponse.SC_UNAUTHORIZED)
         		}else{out.print("404");}  // resp.sendError(HttpServletResponse.SC_NOT_FOUND );
         	}else{out.print("401");}   //erreur 401
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	e.printStackTrace();
         }
 	}
 

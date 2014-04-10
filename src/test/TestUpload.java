@@ -3,6 +3,7 @@ package test;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +33,12 @@ public class TestUpload extends HttpServlet { // Permet de tester l'upload d'une
 			throws IOException {
 		try
 		{
-			List<User> users = ofy().load().type(User.class).order("-coins").limit(10).list();
-
-			req.setAttribute("users", users);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs.jsp").forward(req, resp);
+			BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+			req.setCharacterEncoding("UTF-8");
+        	PrintWriter out = resp.getWriter();
+        	out.print(blobstoreService.createUploadUrl("/upload"));
 		}
-		catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -67,36 +66,78 @@ public class TestUpload extends HttpServlet { // Permet de tester l'upload d'une
         	}
         }
 	
-	
 	private void newUser(HttpServletRequest req, List<BlobKey> blobKeys){
-		
-		User user;
-		if ( blobKeys != null) { //en local, la condition blobKeys != null suffit à éviter un nullPointerException
-			try 
-			{
-				user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com", blobKeys.get(0));
-				// (appel du constructeur avec photo)
+		String id = req.getParameter("id");
+		if(req.getParameter("nom") != "" && req.getParameter("prenom") != "" && req.getParameter("password") != "" && id != "")
+		{
+			if(InteractionObjectify.getUserById(id) == null){
+				User user;
+				if ( blobKeys != null) { //en local, la condition blobKeys != null suffit à éviter un nullPointerException
+					try 
+					{
+						user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"), req.getParameter("id"), blobKeys.get(0));
+						// (appel du constructeur avec photo)
+					}
+					catch (IllegalArgumentException e)  //sur AppEngine, la condition blobKeys != null ne suffit pas
+					{
+						user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"), req.getParameter("id"));
+						// (appel du constructeur sans photo)
+					}
+
+				}
+				else {
+					user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"), req.getParameter("id"));
+					// (appel du constructeur sans photo)
+				}
+				// Enregistrement de l'utilisateur dans le Datastore avec Objectify
+				InteractionObjectify.saveUser(user);
 			}
-			catch (IllegalArgumentException e)  //sur AppEngine, la condition blobKeys != null ne suffit pas
-			{
-				user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com");
-				// (appel du constructeur sans photo)
-			}
-
-
-
-			// Enregistrement de l'utilisateur dans le Datastore avec Objectify
-			InteractionObjectify.saveUser(user);
-
 		}
 	}
 
 	private void newUser(HttpServletRequest req){
-		
-		User user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com");
-		// (appel du constructeur sans photo)
-
-		// Enregistrement de l'utilisateur dans le Datastore avec Objectify
-		InteractionObjectify.saveUser(user);
+		String id = req.getParameter("id");
+		if(req.getParameter("nom") != "" && req.getParameter("prenom") != "" && req.getParameter("password") != "" && id != "")
+		{
+			if(InteractionObjectify.getUserById(id) == null){
+				User user = new User(req.getParameter("nom"), req.getParameter("prenom"), req.getParameter("password"), req.getParameter("id"));
+					// (appel du constructeur sans photo)
+				
+				// Enregistrement de l'utilisateur dans le Datastore avec Objectify
+				InteractionObjectify.saveUser(user);
+			}
+		}
 	}
+	
+//	private void newUser(HttpServletRequest req, List<BlobKey> blobKeys){
+//		
+//		User user;
+//		if ( blobKeys != null) { //en local, la condition blobKeys != null suffit à éviter un nullPointerException
+//			try 
+//			{
+//				user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com", blobKeys.get(0));
+//				// (appel du constructeur avec photo)
+//			}
+//			catch (IllegalArgumentException e)  //sur AppEngine, la condition blobKeys != null ne suffit pas
+//			{
+//				user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com");
+//				// (appel du constructeur sans photo)
+//			}
+//
+//
+//
+//			// Enregistrement de l'utilisateur dans le Datastore avec Objectify
+//			InteractionObjectify.saveUser(user);
+//
+//		}
+//	}
+//
+//	private void newUser(HttpServletRequest req){
+//		
+//		User user = new User("Dupont" + (int)(10*Math.random()), "Jean" + (int)(10*Math.random()), Md5.encode("jean"), "jean" +  (int)(100*Math.random()) + "@dupond.com");
+//		// (appel du constructeur sans photo)
+//
+//		// Enregistrement de l'utilisateur dans le Datastore avec Objectify
+//		InteractionObjectify.saveUser(user);
+//	}
 }

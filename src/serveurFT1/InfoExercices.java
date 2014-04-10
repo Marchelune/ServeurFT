@@ -45,14 +45,18 @@ public class InfoExercices extends HttpServlet {
 
 			ArrayList<Exercice> exercices = new ArrayList<Exercice>();
 
-			if ( querie.equals("synchro")){
+			if ( querie.equals("last")){   //renvoie le dernier exercice réalisé par l'utilisateur
+				Exercice exercice = user.getExercice(0); 
+				out.print(Serialiseur.serialiseExercice(exercice));
+			}
+			if ( querie.equals("synchro")){ //renvoie tous les exercices qui n'ont pas déjà été téléchargés depuis la dernière synchro/le dernier reset sur cette session
 				exercices = user.getExerciceFromKToEnd(session.getLastUpdatedExercice()+1);
 				out.print(Serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);
 				InteractionObjectify.saveUser(user);
 				TableSessions.saveSession(session);
 			}
-			if ( querie.equals("reset")){
+			if ( querie.equals("reset")){ //renvoie tous les exercices déjà effectués
 				exercices = user.getAllExercices();
 				out.print(Serialiseur.serialiseExercice(exercices));
 				session.setLastUpdatedExercice(user.getExercicesKeys().size()-1);

@@ -118,9 +118,11 @@ public class User implements UserInterface {
 	}
 
 	public Exercice getExercice(int k) { //  renvoie l'objet kème dernier exercice effectué : si k=0 dernier exercice, k=1 avant dernier etc
-		InteractionObjectify interaction = new InteractionObjectify();
+		if (this.getExercicesKeys().size() == 0){
+			return null;
+		}
 		Key<Exercice> exerciceKey = exercices.get(this.getExercicesKeys().size() -1 - k );
-		Exercice exercice = interaction.getExerciceByKey(exerciceKey);
+		Exercice exercice = InteractionObjectify.getExerciceByKey(exerciceKey);
 		
 		return exercice;
 	}

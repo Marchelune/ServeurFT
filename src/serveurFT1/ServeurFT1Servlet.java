@@ -30,11 +30,13 @@ public class ServeurFT1Servlet extends HttpServlet {
 			List<User> users = ofy().load().type(User.class).order("-coins").limit(10).list();
 
 			req.setAttribute("users", users);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs.jsp").forward(req, resp);
+			try {
+				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs.jsp").forward(req, resp);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
 		}
-		catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

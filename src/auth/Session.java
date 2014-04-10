@@ -18,7 +18,8 @@ public class Session {
 	private Key<User> userKey;
 	private int lastUpdatedExercice;
 	
-	public Session(){} 
+	public Session(){} //Constructeur vide nécessaire à la gestion de la base de données du Datastore
+	
 	
 	public int getLastUpdatedExercice() {
 		return lastUpdatedExercice;

@@ -14,7 +14,7 @@ public class TableSessions {    //gère la création, l'accès et la supression 
 		ObjectifyService.register(Session.class);
 //        ObjectifyService.register(SessionAdmin.class);
 //        ObjectifyService.register(SessionAndroid.class);
-//        ObjectifyService.register(SessionKinect.class);
+        ObjectifyService.register(SessionKinect.class);
 	}
 	
 	
@@ -26,6 +26,12 @@ public class TableSessions {    //gère la création, l'accès et la supression 
 	public static void deleteSession(Session session)
 	{
 		ofy().delete().entity(session).now();
+	}
+	
+	public static Session newKinectSession(User user ,String idMachine){
+		SessionKinect session = new SessionKinect(user.getKey(), idMachine);
+		ofy().save().entity(session).now();
+		return session;
 	}
 	
 	public static Session newSession(User user){

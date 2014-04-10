@@ -54,7 +54,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Nouvelexercice</servlet-name>
-        <url-pattern>/Nouvelexercice</url-pattern>
+        <url-pattern>/NouvelExercice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Authentificaton</servlet-name>
