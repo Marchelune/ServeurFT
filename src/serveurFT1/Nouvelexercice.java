@@ -42,7 +42,6 @@ public class Nouvelexercice extends HttpServlet {
 	
 	public void doPost( HttpServletRequest req, HttpServletResponse reponse ) throws ServletException, IOException{
 		req.setCharacterEncoding("UTF-8");
-        // Création de l'objet
 		String id = req.getParameter("id");
     	if(id != null)
     	{

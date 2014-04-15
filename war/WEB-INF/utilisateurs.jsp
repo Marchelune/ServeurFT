@@ -21,7 +21,7 @@
 		<h1>Inscrivez-vous sur l'application FitTogether !</h1>
 		
 		
-		<form action="<%= blobstoreService.createUploadUrl("/upload") %> " method="post" enctype="multipart/form-data">
+		<form action="<%= blobstoreService.createUploadUrl("/") %> " method="post" enctype="multipart/form-data">
 			<fieldset>
 			<p>
 				<label for="prenom">Votre prénom :</label>

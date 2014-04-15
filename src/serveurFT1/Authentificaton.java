@@ -16,7 +16,7 @@ import donnees.InteractionObjectify;
 import donnees.User;
 
 @SuppressWarnings("serial")
-public class Authentificaton extends HttpServlet { //ouverture de session. TODO : ajouter un paramètre pour créer différents type de session
+public class Authentificaton extends HttpServlet { //ouverture de session (il y a différents type de sessions
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -46,13 +46,15 @@ public class Authentificaton extends HttpServlet { //ouverture de session. TODO 
         			String passwordCrypte = Md5.encode("ZSS3q2b65m"+ pass + id);
         			if(passwordCrypte.equals(user.getPassword())){
 
-        				if(idMachine != null && type.equals("kinect")){
-        					Session session = TableSessions.newKinectSession(user, idMachine);
-        					out.print(session.getId());
-        				}
-        				else if (idMachine == null && type.equals("kinect")) {
-        					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        				}else{
+        				if (type != null){
+        					if(idMachine != null && type.equals("kinect")){   // on crée une session de type kinect qui permet l'ajout de sportcoins
+        						Session session = TableSessions.newKinectSession(user, idMachine);
+        						out.print(session.getId());
+        					}
+        					else if (idMachine == null && type.equals("kinect")) {
+        						resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        					}
+        				}else{  //cas par défaut : une session de simple consultation
         					Session session = TableSessions.newSession(user); 
         					out.print(session.getId());
         				}

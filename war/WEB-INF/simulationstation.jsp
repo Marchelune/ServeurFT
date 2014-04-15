@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Rentrer ici les rendus de la séance</h1>
-<form action="/Nouvelexercice" method="post" >
+<form action="/NouvelExercice" method="post" >
    <p>Texte à l'intérieur du formulaire</p>
    
    <p>
