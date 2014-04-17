@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import securite.Session;
+import securite.TableSessions;
+
 import com.googlecode.objectify.ObjectifyService;
 
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;
 import donnees.User;
-import auth.Session;
-import auth.TableSessions;
 
 @SuppressWarnings("serial")
 public class Classement extends HttpServlet {

@@ -1,4 +1,4 @@
-package auth;
+package securite;
 
 
 import static com.googlecode.objectify.ObjectifyService.ofy;

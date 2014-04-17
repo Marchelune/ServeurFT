@@ -3,7 +3,7 @@ package donnees;
 import java.util.ArrayList;
 import java.util.Date;
 
-import auth.Md5;
+import securite.Md5;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -32,7 +32,10 @@ public class User implements UserInterface {
 	private transient ArrayList<Key<Exercice>> exercices = new ArrayList<Key<Exercice>>();   // clé objectify
 	private transient BlobKey clePhoto;
 	private String urlPhoto;
-	
+	private transient long totalCiseaux;
+	private transient long totalBoxe;
+	private transient long totalSquat;
+	private transient long totalPompes;
 	
 	public User(){};
 	
@@ -44,6 +47,10 @@ public class User implements UserInterface {
 		this.id = id;
 		this.inscription = new Date();
 		password = Md5.encode("ZSS3q2b65m"+ pass + id);
+		totalBoxe = 0;
+		totalCiseaux = 0;
+		totalPompes = 0;
+		totalSquat = 0;
 	}
 	
 	public User(String nom, String prenom , String pass, String id, BlobKey key) {
@@ -55,6 +62,22 @@ public class User implements UserInterface {
 	}
 	
 	
+	public long getTotalCiseaux() {
+		return totalCiseaux;
+	}
+
+	public long getTotalBoxe() {
+		return totalBoxe;
+	}
+
+	public long getTotalSquat() {
+		return totalSquat;
+	}
+
+	public long getTotalPompes() {
+		return totalPompes;
+	}
+
 	public BlobKey getClePhoto() {
 		return clePhoto;
 	}
@@ -94,14 +117,7 @@ public class User implements UserInterface {
 	public int getCoins() {
 		return coins;
 	}
-	public void setCoins(int coins) {
-		this.coins = coins;
-	}
-	@Override
-	public void addCoins(int coins) {
-		this.coins += coins;
-		
-	}
+	
 	
 	public void addFriend(String id)
 	{
@@ -129,12 +145,11 @@ public class User implements UserInterface {
 	
 	public ArrayList<Exercice> getAllExercices() { //  renvoie tous les exos  
 		ArrayList<Exercice> tousexercices = new ArrayList<Exercice>(); 
-		InteractionObjectify interaction = new InteractionObjectify();
 		if (exercices.size() == 0){return null;};
 		for(int i = 0 ; i <= this.exercices.size() -1; i++)
 		{
 			Key<Exercice> exerciceKey = exercices.get(i);
-			tousexercices.add(interaction.getExerciceByKey(exerciceKey));
+			tousexercices.add(InteractionObjectify.getExerciceByKey(exerciceKey));
 		}
 		
 		return tousexercices;
@@ -142,19 +157,31 @@ public class User implements UserInterface {
 	
 	public ArrayList<Exercice> getExerciceFromKToEnd(int k) { //  renvoie de k à la fin
 		ArrayList<Exercice> exercicesNonSynchro = new ArrayList<Exercice>();
-		InteractionObjectify interaction = new InteractionObjectify();
 		if (exercices.size() == 0){return null;};
 		for(int i = k  ; i <= this.exercices.size() -1; i++)
 		{
 			Key<Exercice> exerciceKey = exercices.get(i);
-			exercicesNonSynchro.add(interaction.getExerciceByKey(exerciceKey));
+			exercicesNonSynchro.add(InteractionObjectify.getExerciceByKey(exerciceKey));
 		}
 		return exercicesNonSynchro;
 	}
 	
 	
-	public void addExercices(Key<Exercice> e) {
+	public void addExercices(Key<Exercice> e, Exercice exercice) {
 		exercices.add(e);
+		coins = coins + exercice.getCoins();
+		if(exercice.getType().equals("ciseaux")){
+			totalCiseaux += exercice.getDuree();
+		}
+		if(exercice.getType().equals("boxe")){
+			totalBoxe += exercice.getDuree();
+		}
+		if(exercice.getType().equals("squat") ){
+			totalSquat += exercice.getDuree();
+		}
+		if(exercice.getType().equals("pompes") ){
+			totalPompes += exercice.getDuree();
+		}
 	}
 
 	

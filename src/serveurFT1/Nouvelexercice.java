@@ -57,8 +57,7 @@ public class Nouvelexercice extends HttpServlet {
     					ofy().save().entity(exercice).now(); // exercice sauvegardé dans le Datastore
     					
     					Key<Exercice> cleExercice = Key.create(Exercice.class, exercice.getId());
-    					user.addExercices(cleExercice);   // Relation user --> exercice
-    					user.addCoins(Integer.parseInt( req.getParameter("coins")));
+    					user.addExercices(cleExercice, exercice);   // addExercice réalise toutes les opérations (ajout de SportCoins, ajout de l'exercice à l'historique etc)
     					ofy().save().entity(user).now();
     				} catch (ParseException e) {
     					e.printStackTrace();

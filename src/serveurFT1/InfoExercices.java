@@ -16,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+import securite.Session;
+import securite.TableSessions;
+
 import com.googlecode.objectify.Key;
 
-import auth.Session;
-import auth.TableSessions;
 import donnees.Exercice;
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;

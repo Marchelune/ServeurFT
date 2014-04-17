@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import securite.Session;
+import securite.TableSessions;
 import donnees.InteractionObjectify;
 import donnees.User;
-import auth.Session;
-import auth.TableSessions;
 
 @SuppressWarnings("serial")
 public class Friends extends HttpServlet {

@@ -1,9 +1,9 @@
-package auth;
+package securite;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Md5 { //permet de crypter les mots de passes stockés sur le serveur
+public class Md5 { //permet de hacher les mots de passes stockés sur le serveur
 
 	public static String encode(String password)
     {

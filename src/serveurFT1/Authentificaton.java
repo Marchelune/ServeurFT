@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import auth.Md5;
-import auth.Session;
-import auth.TableSessions;
+import securite.Md5;
+import securite.Session;
+import securite.TableSessions;
 import donnees.InteractionObjectify;
 import donnees.User;
 
@@ -60,9 +60,9 @@ public class Authentificaton extends HttpServlet { //ouverture de session (il y 
         				}
 
 
-        			}else{out.print("401");} // resp.sendError(HttpServletResponse.SC_UNAUTHORIZED)
-        		}else{out.print("404");}  // resp.sendError(HttpServletResponse.SC_NOT_FOUND );
-        	}else{out.print("401");}   //erreur 401
+        			}else{out.print("401");  resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}
+        		}else{out.print("404");  resp.sendError(HttpServletResponse.SC_NOT_FOUND );}
+        	}else{out.print("401"); resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}  //erreur 401
 
         } catch (IOException e) {
         	e.printStackTrace();

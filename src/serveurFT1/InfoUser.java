@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-import auth.Session;
-import auth.TableSessions;
+
+import securite.Session;
+import securite.TableSessions;
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;
 import donnees.User;

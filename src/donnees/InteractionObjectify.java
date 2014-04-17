@@ -1,7 +1,7 @@
 package donnees;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
-import auth.Session;
+import securite.Session;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;

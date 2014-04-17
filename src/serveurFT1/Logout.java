@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import auth.Session;
-import auth.TableSessions;
+import securite.Session;
+import securite.TableSessions;
 
 
 @SuppressWarnings("serial")
