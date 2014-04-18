@@ -51,9 +51,9 @@ public class ServeurFT1Servlet extends HttpServlet {
         		// Récupère la liste des fichiers uploadés dans le champ "photo" du formulaire d'inscription (il peut y en avoir plusieurs)
         		List<BlobKey> blobKeys = blobs.get("photo");
         		// Création de l'utilisateur
-        		newUser(req, blobKeys);
+        		newUser(req, blobKeys, resp);
         	}catch (IllegalStateException e){  //cas où la requete n'est pas passée par le blobstore
-        		newUser(req);
+        		newUser(req, resp);
         	}
             
 
@@ -65,7 +65,7 @@ public class ServeurFT1Servlet extends HttpServlet {
         }
 
 		
-	private void newUser(HttpServletRequest req, List<BlobKey> blobKeys){
+	private void newUser(HttpServletRequest req, List<BlobKey> blobKeys, HttpServletResponse resp){
 		String id = req.getParameter("id");
 		if(req.getParameter("nom") != "" && req.getParameter("prenom") != "" && req.getParameter("password") != "" && id != "")
 		{
@@ -90,12 +90,15 @@ public class ServeurFT1Servlet extends HttpServlet {
 				}
 				// Enregistrement de l'utilisateur dans le Datastore avec Objectify
 				InteractionObjectify.saveUser(user);
+			}else{
+				resp.setStatus(resp.SC_CONFLICT);
 			}
 		}
 	}
 
-	private void newUser(HttpServletRequest req){
+	private void newUser(HttpServletRequest req, HttpServletResponse resp){
 		String id = req.getParameter("id");
+		
 		if(req.getParameter("nom") != "" && req.getParameter("prenom") != "" && req.getParameter("password") != "" && id != "")
 		{
 			if(InteractionObjectify.getUserById(id) == null){
@@ -104,6 +107,8 @@ public class ServeurFT1Servlet extends HttpServlet {
 				
 				// Enregistrement de l'utilisateur dans le Datastore avec Objectify
 				InteractionObjectify.saveUser(user);
+			}else{
+				resp.setStatus(resp.SC_CONFLICT);
 			}
 		}
 	}

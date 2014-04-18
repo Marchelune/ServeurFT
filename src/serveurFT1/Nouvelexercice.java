@@ -1,6 +1,5 @@
 package serveurFT1;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.util.Date;
@@ -11,6 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import securite.GenerateurCleControle;
+import securite.Session;
+import securite.SessionKinect;
+import securite.TableSessions;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
@@ -42,32 +46,38 @@ public class Nouvelexercice extends HttpServlet {
 	
 	public void doPost( HttpServletRequest req, HttpServletResponse reponse ) throws ServletException, IOException{
 		req.setCharacterEncoding("UTF-8");
-		String id = req.getParameter("id");
-    	if(id != null)
-    	{
-    		User user = InteractionObjectify.getUserById(id);
-    		if (user != null)
-    		{
-    			if(req.getParameter("date") != null){
-    				Date date;
-    				try {
-    					date = new SimpleDateFormat("ddMMyyyy").parse(req.getParameter("date"));
-    					Exercice exercice = new Exercice( date , req.getParameter("sport"), Long.parseLong( req.getParameter("duree")), 
-    							Integer.parseInt( req.getParameter("repetitions")), Integer.parseInt( req.getParameter("coins")));
-    					ofy().save().entity(exercice).now(); // exercice sauvegardé dans le Datastore
-    					
-    					Key<Exercice> cleExercice = Key.create(Exercice.class, exercice.getId());
-    					user.addExercices(cleExercice, exercice);   // addExercice réalise toutes les opérations (ajout de SportCoins, ajout de l'exercice à l'historique etc)
-    					ofy().save().entity(user).now();
-    				} catch (ParseException e) {
-    					e.printStackTrace();
-    				}
-    			}
-
-    		}
-    		
-    	}
+		String s = req.getParameter("session");
+		String sport = req.getParameter("sport");
+		String repetitions = req.getParameter("repetitions");
+		String duree = req.getParameter("duree");
+		String coins = req.getParameter("coins");
+		String controle = req.getParameter("c");
 		
+		if(s != null && sport != null && repetitions != null && duree != null && coins != null && controle != null)
+		{
+			User user = null;
+			if(TableSessions.getSession(s) != null){
+				SessionKinect session = (SessionKinect) TableSessions.getSession(s);
+				user = InteractionObjectify.getUserByKey(session.getUserKey() ); 
+				if (user != null)
+				{
+					String c = GenerateurCleControle.getCleControleur(session, Integer.parseInt(coins), Integer.parseInt(repetitions), Long.parseLong(duree));
+					if(controle.equals(c)){
+					Exercice exercice = new Exercice( new Date() , req.getParameter("sport"), Long.parseLong( req.getParameter("duree")), 
+							Integer.parseInt( req.getParameter("repetitions")), Integer.parseInt( req.getParameter("coins")));
+					
+					InteractionObjectify.saveExercice(exercice); // exercice sauvegardé dans le Datastore
+					session.incrementNmbExercices(); // on incrémente le nombre d'exercices réalisés sur cette session
+
+					Key<Exercice> cleExercice = Key.create(Exercice.class, exercice.getId());
+					user.addExercices(cleExercice, exercice);   // addExercice réalise toutes les opérations (ajout de SportCoins, ajout de l'exercice à l'historique etc)
+					InteractionObjectify.saveUser(user);
+					}else{reponse.sendError(HttpServletResponse.SC_UNAUTHORIZED );}
+				}
+			}
+
+		}else{reponse.sendError(HttpServletResponse.SC_BAD_REQUEST );}
+
 	}
 	
 	

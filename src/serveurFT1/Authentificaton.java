@@ -60,9 +60,9 @@ public class Authentificaton extends HttpServlet { //ouverture de session (il y 
         				}
 
 
-        			}else{out.print("401");  resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}
-        		}else{out.print("404");  resp.sendError(HttpServletResponse.SC_NOT_FOUND );}
-        	}else{out.print("401"); resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}  //erreur 401
+        			}else{ resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}
+        		}else{  resp.sendError(HttpServletResponse.SC_NOT_FOUND );}
+        	}else{ resp.sendError(HttpServletResponse.SC_UNAUTHORIZED) ;}  //erreur 401
 
         } catch (IOException e) {
         	e.printStackTrace();

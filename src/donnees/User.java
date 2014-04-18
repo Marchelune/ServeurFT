@@ -121,7 +121,10 @@ public class User implements UserInterface {
 	
 	public void addFriend(String id)
 	{
-		friends.add(id);
+		if(friends.contains(id) == false){
+			friends.add(id);
+		}
+		
 	}
 
 	public void deleteFriend(String id) {

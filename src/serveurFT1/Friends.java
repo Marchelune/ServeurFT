@@ -22,27 +22,30 @@ public class Friends extends HttpServlet {
 			String s = req.getParameter("session");
 			String id = req.getParameter("id");
 			String q = req.getParameter("q");
-			Session session = TableSessions.getSession(s);
-			User user = InteractionObjectify.getUserByKey(session.getUserKey());
-			User friend = InteractionObjectify.getUserById(id);
 
-			if (user != null){
-				if (q.equals("add")){
-					if(friend != null){
-						user.addFriend(id);
-						InteractionObjectify.saveUser(user);
-					}else{resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);}
-				}else if (q.equals("delete")){
-					if(friend != null){
-						user.deleteFriend(id);
-						InteractionObjectify.saveUser(user);
+			if(s != null && id != null && q!= null){
+				Session session = TableSessions.getSession(s);
+				User user = InteractionObjectify.getUserByKey(session.getUserKey());
+				User friend = InteractionObjectify.getUserById(id);
+
+				if (user != null){
+					if (q.equals("add")){
+						if(friend != null){
+							user.addFriend(id);
+							InteractionObjectify.saveUser(user);
+						}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
+					}else if (q.equals("delete")){
+						if(friend != null){
+							user.deleteFriend(id);
+							InteractionObjectify.saveUser(user);
+						}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
 					}
-				}
+				}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
 			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

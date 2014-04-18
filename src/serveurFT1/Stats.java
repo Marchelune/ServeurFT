@@ -57,10 +57,10 @@ public class Stats extends HttpServlet {
 				if ( type.equals("pompes")){  
 					out.print(Long.toString(user.getTotalPompes()));
 				}
-			}
+			}else {reponse.sendError(HttpServletResponse.SC_FORBIDDEN);}
 
 
-		}
+		}else {reponse.sendError(HttpServletResponse.SC_BAD_REQUEST);}
 	}
 
 
