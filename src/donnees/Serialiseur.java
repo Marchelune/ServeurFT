@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import catalogue.Item;
+import catalogue.Purchase;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -24,6 +25,26 @@ public class Serialiseur {
 		return itemsXml;
 		
 	}
+	
+public static String serialisePurchases(ArrayList<Purchase> p) {
+		
+		XStream xstream = new XStream(new DomDriver("UTF-8"));
+		xstream.alias("Purchase", Purchase.class);
+		String purchasesXml = xstream.toXML(p);
+
+		return purchasesXml;
+		
+	}
+
+public static String serialisePurchase(Purchase p) {
+	
+	XStream xstream = new XStream(new DomDriver("UTF-8"));
+	xstream.alias("Purchase", Purchase.class);
+	String purchaseXml = xstream.toXML(p);
+
+	return purchaseXml;
+	
+}
 	
 	public static String serialiseItem(Item i) {
 		

@@ -28,7 +28,7 @@ public class Item { //une récompense du catalogue
 	private String urlPhoto;
 	@Index private int price;
 	private int quantity;
-	@Index private int note;
+	@Index private float note;
 	private ArrayList<Feedback> feedbacks;
 	@Parent private transient Key parent; //"astuce" pour avoir toutes les entités Item sur un même serveur physique --> accès plus rapide
 	private transient BlobKey keyPhoto;
@@ -45,6 +45,7 @@ public class Item { //une récompense du catalogue
 		this.quantity = quantity;
 		this.hit =0;
 		this.category = category;
+		this.note= (float) 2.5;
 		
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 		ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(keyPhoto);
@@ -55,8 +56,22 @@ public class Item { //une récompense du catalogue
 		hit++;
 	}
 	
+	public void decrementQuantity(){
+		quantity--;
+	}
+	
+	public void incrementQuantity(){
+		quantity++;
+	}
+	
 	public void addQuantity(int x){
 		quantity += x;
+	}
+	
+	public void addFeedback(Feedback feedback){
+		
+		note = (note + feedback.getNote())/2;
+		feedbacks.add(feedback);
 	}
 
 	public int getPrice() {
@@ -87,7 +102,7 @@ public class Item { //une récompense du catalogue
 		return quantity;
 	}
 
-	public int getNote() {
+	public float getNote() {
 		return note;
 	}
 

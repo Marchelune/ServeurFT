@@ -1,14 +1,21 @@
 package donnees;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import securite.Md5;
+import catalogue.Catalogue;
+import catalogue.Item;
+import catalogue.Purchase;
 
 import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.images.*;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.VoidWork;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -36,6 +43,7 @@ public class User implements UserInterface {
 	private transient long totalBoxe;
 	private transient long totalSquat;
 	private transient long totalPompes;
+	private transient ArrayList<Purchase> purchases  = new ArrayList<Purchase>();
 	
 	public User(){};
 	
@@ -98,10 +106,7 @@ public class User implements UserInterface {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
-		
-	}
+	
 	public String getNom() {
 		return nom;
 	}
@@ -187,7 +192,23 @@ public class User implements UserInterface {
 		}
 	}
 
+	public void acheter(Item item){ //ajoute un item à l'historique d'achat et retire le nombre de SportCoins correspondants.
+									// attention : ne vérifie pas la solvabilité du comtpe
+
+		coins -= item.getPrice();
+		item.decrementQuantity();
+		item.incrementHit();
+		Catalogue.saveItem(item);
+		Purchase purchase = new Purchase(this.getId(), item);
+		Catalogue.savePurchase(purchase);
+		purchases.add(purchase);
+
+	}
 	
+	public ArrayList<Purchase> getPurchases() {
+		return purchases;
+	}
+
 	public Date getInscription() {
 		return inscription;
 	}

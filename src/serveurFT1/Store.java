@@ -1,12 +1,9 @@
 package serveurFT1;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import securite.Session;
 import securite.TableSessions;
 import catalogue.Catalogue;
+import catalogue.Feedback;
+import catalogue.Item;
 
 import com.googlecode.objectify.ObjectifyService;
 
@@ -25,9 +24,9 @@ import donnees.User;
 public class Store extends HttpServlet { //service du catalogue : permet de consulter les articles disponibles (GET) et de faire des achats (TODO POST)
 
 	static {
-        ObjectifyService.register(User.class);
+		ObjectifyService.register(User.class);
 	}
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		try
@@ -38,7 +37,7 @@ public class Store extends HttpServlet { //service du catalogue : permet de cons
 			String q = req.getParameter("q");
 			String group = req.getParameter("group");
 			String category = req.getParameter("category");
-			
+
 			if(q!=null){
 				if(q.equals("getItems")){
 					resp.setContentType("text/xml; charset=UTF-8");
@@ -54,14 +53,79 @@ public class Store extends HttpServlet { //service du catalogue : permet de cons
 				}
 				else if(q.equals("getGroups")){
 					out.print(Catalogue.getCatecories().toString());
-				}
-				
+				}else if(q.equals("getItem") && req.getParameter("id") != null){
+					resp.setContentType("text/xml; charset=UTF-8");
+					out.print(Serialiseur.serialiseItem(Catalogue.getItemById(req.getParameter("id"))));
+
+
+				}else if(q.equals("historic") && req.getParameter("session") != null){ //renvoie l'historique des achats
+					Session session = TableSessions.getSession(req.getParameter("session")); 
+					if(session != null){
+						resp.setContentType("text/xml; charset=UTF-8");
+						User user = InteractionObjectify.getUserByKey(session.getUserKey());
+						out.print(Serialiseur.serialisePurchases(user.getPurchases()));
+					}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
+
+				}else{resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
+
 			}else{resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
-			
+
 		}catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+
+		String s = req.getParameter("session"); //identifiant de la session (UUID)
+		String sItem = req.getParameter("item");
+		String querie = req.getParameter("q");
+		PrintWriter out = resp.getWriter();
+
+		//Authentification
+		if(s != null && querie != null){
+			Session session = TableSessions.getSession(s);
+			if (session != null){
+				User user = InteractionObjectify.getUserByKey(session.getUserKey());
+				Item item = Catalogue.getItemById(sItem);
+				if(item != null){
+					if(querie.equals("buy")){
+						
+						if(user.getCoins() >= item.getPrice()){
+							if(item.getQuantity() > 0){
+								user.acheter(item);
+								InteractionObjectify.saveUser(user);
+								resp.setContentType("text/xml; charset=UTF-8");
+								out.print(Serialiseur.serialisePurchase(user.getPurchases().get(user.getPurchases().size() -1)));
+							}else {resp.sendError(500, "Sold out");}
+						}else {resp.sendError(HttpServletResponse.SC_PAYMENT_REQUIRED);}
+
+					}else if (querie.equals("opinion")){
+						String snote = req.getParameter("note");
+						String comment = req.getParameter("comment");
+						if(snote != null && comment != null){
+							int note = Integer.parseInt(snote) % 5;
+							
+							Feedback feedback = new Feedback(user, comment,note, sItem);
+							item.addFeedback(feedback);
+							Catalogue.saveFeedback(feedback);
+							Catalogue.saveItem(item);
+							
+						}else {resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
+						
+					}else {resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
+					
+				}else {resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
+
+			}else {resp.sendError(HttpServletResponse.SC_FORBIDDEN);}
+
+		}else {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+
+	}
+
 }

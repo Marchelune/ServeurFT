@@ -18,6 +18,7 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
 	static {
         ObjectifyService.register(Item.class);
         ObjectifyService.register(Feedback.class);
+        ObjectifyService.register(Purchase.class);
     }
 	
 	public static List<Item> getItemByNote(int limite){
@@ -62,6 +63,11 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
 	{
 		Item item = ofy().load().type(Item.class).parent(Key.create(Item.class, "catalogue")).id(id).now();
 		return item;
+	}
+	
+	public static void savePurchase(Purchase purchase)
+	{
+		ofy().save().entity(purchase).now();
 	}
 	
 	public static ArrayList<String> getCatecories(){ //défini les différentes catégories possibles (c'est un peu "artisanal" mais cela aurait une bonne forme dans une version évoluée du projet)
