@@ -9,6 +9,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-class>serveurFT1.ServeurFT1Servlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Store</servlet-name>
+        <servlet-class>serveurFT1.Store</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class>serveurFT1.Admin</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Stats</servlet-name>
         <servlet-class>serveurFT1.Stats</servlet-class>
     </servlet>
@@ -48,6 +56,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Store</servlet-name>
+        <url-pattern>/Store</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/Admin</url-pattern>
+    </servlet-mapping>
      <servlet-mapping>
         <servlet-name>Stats</servlet-name>
         <url-pattern>/Stats</url-pattern>
@@ -84,6 +100,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>ServeurFT1Servlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <security-constraint>
+	<web-resource-collection>
+		<url-pattern>/Admin</url-pattern>
+	</web-resource-collection>
+	<auth-constraint>
+		<role-name>admin</role-name>
+	</auth-constraint>
+	</security-constraint>
     <welcome-file-list>
         <welcome-file>utilisateur.jsp</welcome-file>
     </welcome-file-list>
