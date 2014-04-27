@@ -43,7 +43,7 @@ public class User implements UserInterface {
 	private transient long totalBoxe;
 	private transient long totalSquat;
 	private transient long totalPompes;
-	private transient ArrayList<Purchase> purchases  = new ArrayList<Purchase>();
+	private transient ArrayList<Key<Purchase>> purchases  = new ArrayList<Key<Purchase>>();
 	
 	public User(){};
 	
@@ -201,11 +201,12 @@ public class User implements UserInterface {
 		Catalogue.saveItem(item);
 		Purchase purchase = new Purchase(this.getId(), item);
 		Catalogue.savePurchase(purchase);
-		purchases.add(purchase);
+		Key<Purchase> clePurchase = Key.create(Purchase.class, purchase.getId());
+		purchases.add(clePurchase);
 
 	}
 	
-	public ArrayList<Purchase> getPurchases() {
+	public ArrayList<Key<Purchase>> getPurchases() {
 		return purchases;
 	}
 

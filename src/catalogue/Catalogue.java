@@ -5,12 +5,10 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.util.ArrayList;
 import java.util.List;
 
-import securite.Session;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
-import donnees.User;
 
 
 public class Catalogue { //gère la persistence et l'accès aux items du catalogue
@@ -63,6 +61,24 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
 	{
 		Item item = ofy().load().type(Item.class).parent(Key.create(Item.class, "catalogue")).id(id).now();
 		return item;
+	}
+	
+	public static Purchase getPurchaseByKey(Key<Purchase> kp){
+		
+		return ofy().load().key(kp).now();
+		
+	}
+	
+	public static ArrayList<Purchase> getPurchasesByKey(ArrayList<Key<Purchase>> kp){
+		
+		ArrayList<Purchase> purchases = new ArrayList<Purchase>();
+		
+		for (Key<Purchase> keyPurchase : kp){
+			purchases.add(getPurchaseByKey(keyPurchase));
+		}
+		
+		return purchases;
+		
 	}
 	
 	public static void savePurchase(Purchase purchase)

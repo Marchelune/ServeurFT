@@ -1,9 +1,10 @@
-package serveurFT1;
+package test;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,66 +15,25 @@ import catalogue.Catalogue;
 import catalogue.Feedback;
 import catalogue.Item;
 
-import com.googlecode.objectify.ObjectifyService;
 
 import donnees.InteractionObjectify;
 import donnees.Serialiseur;
 import donnees.User;
 
 @SuppressWarnings("serial")
-public class Store extends HttpServlet { //service du catalogue : permet de consulter les articles disponibles (GET) et de faire des achats (TODO POST)
+public class TestStore extends HttpServlet { //service du catalogue : permet de consulter les articles disponibles (GET) et de faire des achats (TODO POST)
 
-	static {
-		ObjectifyService.register(User.class);
-	}
+	
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		try
-		{
-			req.setCharacterEncoding("UTF-8");
-			resp.setCharacterEncoding("UTF-8");
-			PrintWriter out = resp.getWriter();
-			String q = req.getParameter("q");
-			String group = req.getParameter("group");
-			String category = req.getParameter("category");
-
-			if(q!=null){
-				if(q.equals("getItems")){
-					resp.setContentType("text/xml; charset=UTF-8");
-					if(group != null && group.equals("category") && category != null){
-						out.print(Serialiseur.serialiseItems(Catalogue.getItemByCategory(20, category)));
-					}
-					else if(group != null && group.equals("top")){
-						out.print(Serialiseur.serialiseItems(Catalogue.getItemByPopularite(10)));
-					}
-					else{
-						out.print(Serialiseur.serialiseItems(Catalogue.getItemByNote(20)));
-					}
-				}
-				else if(q.equals("getGroups")){
-					out.print(Catalogue.getCatecories().toString());
-				}else if(q.equals("getItem") && req.getParameter("id") != null){
-					resp.setContentType("text/xml; charset=UTF-8");
-					out.print(Serialiseur.serialiseItem(Catalogue.getItemById(req.getParameter("id"))));
-
-
-				}else if(q.equals("historic") && req.getParameter("session") != null){ //renvoie l'historique des achats
-					Session session = TableSessions.getSession(req.getParameter("session")); 
-					if(session != null){
-						resp.setContentType("text/xml; charset=UTF-8");
-						User user = InteractionObjectify.getUserByKey(session.getUserKey());
-						out.print(Serialiseur.serialisePurchases(Catalogue.getPurchasesByKey(user.getPurchases())));
-					}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
-
-				}else{resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
-
-			}else{resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
-
-		}catch (IOException e)
-		{
+		
+		try {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/TestAchat.jsp").forward(req, resp);
+		} catch (ServletException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 
