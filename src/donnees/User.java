@@ -43,7 +43,7 @@ public class User implements UserInterface {
 	private transient long totalBoxe;
 	private transient long totalSquat;
 	private transient long totalPompes;
-	private transient ArrayList<Key<Purchase>> purchases  = new ArrayList<Key<Purchase>>();
+	private transient ArrayList<Key<Purchase>> kPurchases  = new ArrayList<Key<Purchase>>();
 	
 	public User(){};
 	
@@ -202,12 +202,26 @@ public class User implements UserInterface {
 		Purchase purchase = new Purchase(this.getId(), item);
 		Catalogue.savePurchase(purchase);
 		Key<Purchase> clePurchase = Key.create(Purchase.class, purchase.getId());
-		purchases.add(clePurchase);
+		kPurchases.add(clePurchase);
 
 	}
 	
+	public boolean possede(String itemID){ // renvoie true si l'utilisateur a acheté l'item passé en paramètre. 
+		ArrayList<Purchase> purchases = Catalogue.getPurchasesByKey(kPurchases);
+		for (Purchase purchase : purchases){
+		
+			String tempItem = purchase.getItem();
+			
+			if(tempItem.equals(itemID)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public ArrayList<Key<Purchase>> getPurchases() {
-		return purchases;
+		return kPurchases;
 	}
 
 	public Date getInscription() {

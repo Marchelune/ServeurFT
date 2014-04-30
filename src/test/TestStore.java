@@ -70,8 +70,8 @@ public class TestStore extends HttpServlet { //service du catalogue : permet de 
 							int note = Integer.parseInt(snote) % 5;
 							
 							Feedback feedback = new Feedback(user, comment,note, sItem);
-							item.addFeedback(feedback);
 							Catalogue.saveFeedback(feedback);
+							item.addFeedback(feedback);
 							Catalogue.saveItem(item);
 							out.print(Serialiseur.serialiseFeedback(feedback));
 							

@@ -29,7 +29,7 @@ public class Item { //une récompense du catalogue
 	@Index private int price;
 	private int quantity;
 	@Index private float note;
-	private ArrayList<Feedback> feedbacks;
+	private ArrayList<Key<Feedback>> feedbacks = new ArrayList<Key<Feedback>>();
 	@Parent private transient Key parent; //"astuce" pour avoir toutes les entités Item sur un même serveur physique --> accès plus rapide
 	private transient BlobKey keyPhoto;
 	@Index int hit; //nombre d'achats déjà effectués
@@ -71,7 +71,8 @@ public class Item { //une récompense du catalogue
 	public void addFeedback(Feedback feedback){
 		
 		note = (note + feedback.getNote())/2;
-		feedbacks.add(feedback);
+		Key<Feedback> keyFeedback = Key.create(Feedback.class, feedback.getId());
+		feedbacks.add(keyFeedback);
 	}
 
 	public int getPrice() {
@@ -106,7 +107,7 @@ public class Item { //une récompense du catalogue
 		return note;
 	}
 
-	public ArrayList<Feedback> getFeedbacks() {
+	public ArrayList<Key<Feedback>> getFeedbacks() {
 		return feedbacks;
 	}
 

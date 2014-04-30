@@ -19,6 +19,10 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
         ObjectifyService.register(Purchase.class);
     }
 	
+	public static Feedback getFeedbackByKey(Key<Feedback> kf){
+		return ofy().load().key(kf).now();
+	}
+	
 	public static List<Item> getItemByNote(int limite){
 		List<Item> items = ofy().load().type(Item.class).order("-note").limit(limite).list();
 		
