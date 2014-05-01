@@ -53,11 +53,15 @@ public class Store extends HttpServlet { //service du catalogue : permet de cons
 				}
 				else if(q.equals("getGroups")){
 					out.print(Catalogue.getCatecories().toString());
-				}else if(q.equals("getItem") && req.getParameter("id") != null){
+				}else if(q.equals("getItem") && req.getParameter("item") != null){
 					resp.setContentType("text/xml; charset=UTF-8");
-					out.print(Serialiseur.serialiseItem(Catalogue.getItemById(req.getParameter("id"))));
-
-
+					out.print(Serialiseur.serialiseItem(Catalogue.getItemById(req.getParameter("item"))));
+				}else if(q.equals("feedbacks") && req.getParameter("item") != null){
+					resp.setContentType("text/xml; charset=UTF-8");
+					Item item =  Catalogue.getItemById(req.getParameter("item")) ;
+					if (item != null){
+						out.print(Serialiseur.serialiseFeedbacks(Catalogue.getFeedbacksByKey(item.getFeedbacks())));
+					}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
 				}else if(q.equals("historic") && req.getParameter("session") != null){ //renvoie l'historique des achats
 					Session session = TableSessions.getSession(req.getParameter("session")); 
 					if(session != null){

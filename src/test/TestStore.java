@@ -69,11 +69,13 @@ public class TestStore extends HttpServlet { //service du catalogue : permet de 
 						if(snote != null && comment != null){
 							int note = Integer.parseInt(snote) % 5;
 							
-							Feedback feedback = new Feedback(user, comment,note, sItem);
-							Catalogue.saveFeedback(feedback);
-							item.addFeedback(feedback);
-							Catalogue.saveItem(item);
-							out.print(Serialiseur.serialiseFeedback(feedback));
+							if(user.possede(sItem)){ // on vérifie que l'utilisateur a bien acheté l'item qu'il note.
+								Feedback feedback = new Feedback(user, comment,note, sItem);
+								Catalogue.saveFeedback(feedback);
+								item.addFeedback(feedback);
+								Catalogue.saveItem(item);
+								out.print(Serialiseur.serialiseFeedback(feedback));
+							}else{resp.sendError(HttpServletResponse.SC_FORBIDDEN);}
 							
 						}else {resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
 						

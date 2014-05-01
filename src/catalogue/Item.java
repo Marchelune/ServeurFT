@@ -29,7 +29,7 @@ public class Item { //une récompense du catalogue
 	@Index private int price;
 	private int quantity;
 	@Index private float note;
-	private ArrayList<Key<Feedback>> feedbacks = new ArrayList<Key<Feedback>>();
+	private transient ArrayList<Key<Feedback>> feedbacks = new ArrayList<Key<Feedback>>();
 	@Parent private transient Key parent; //"astuce" pour avoir toutes les entités Item sur un même serveur physique --> accès plus rapide
 	private transient BlobKey keyPhoto;
 	@Index int hit; //nombre d'achats déjà effectués

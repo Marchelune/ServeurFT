@@ -47,6 +47,15 @@ public class Serialiseur {
 
 	}
 
+	public static String serialiseFeedbacks(ArrayList<Feedback> f) {
+
+		XStream xstream = new XStream(new DomDriver("UTF-8"));
+		xstream.alias("Feedback", Feedback.class);
+		String feedbacksXml = xstream.toXML(f);
+
+		return feedbacksXml;
+
+	}
 	public static String serialiseFeedback(Feedback f) {
 
 		XStream xstream = new XStream(new DomDriver("UTF-8"));

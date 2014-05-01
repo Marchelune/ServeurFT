@@ -20,7 +20,17 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
     }
 	
 	public static Feedback getFeedbackByKey(Key<Feedback> kf){
-		return ofy().load().key(kf).now();
+		Feedback feedback = ofy().load().key(kf).now();
+		return feedback;
+	}
+	
+	public static ArrayList<Feedback> getFeedbacksByKey(ArrayList<Key<Feedback>> kfeedbacks){
+		ArrayList<Feedback> feedbacks = new ArrayList<Feedback>();
+		for(Key<Feedback> kf : kfeedbacks ){
+			feedbacks.add(getFeedbackByKey(kf));
+		}
+		
+		return feedbacks;
 	}
 	
 	public static List<Item> getItemByNote(int limite){
