@@ -1,0 +1,183 @@
+.html
+{
+	background: #006837 url("../images/escheresque.jpg") repeat left top scroll;
+}
+
+#page
+{
+	z-index: 1;
+	width: 960px;
+	min-height: 1318px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#page_position_content
+{
+	margin-top: -36px;
+	margin-bottom: -36px;
+}
+
+#u81
+{
+	z-index: 2;
+	width: 1160px;
+	border-style: none;
+	border-color: transparent;
+	padding-bottom: 7px;
+	position: relative;
+	left: -100px;
+	background: #FFFFFF url("../images/tuile.jpg") repeat-x left top;
+}
+
+#u118
+{
+	z-index: 4;
+	width: 1219px;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 45px;
+	left: -29px;
+}
+
+#u118_img
+{
+	padding-left: 168px;
+	padding-right: 168px;
+}
+
+#u168-7
+{
+	z-index: 6;
+	display: block;
+	vertical-align: top;
+	margin-left: 20px;
+	margin-top: 14px;
+	position: relative;
+}
+
+#u172-4
+{
+	z-index: 17;
+	display: block;
+	vertical-align: top;
+	margin-left: 20px;
+	margin-top: 20px;
+	position: relative;
+}
+
+#u251
+{
+	z-index: 21;
+	width: 272px;
+	min-height: 226px;
+	border-style: none;
+	border-color: transparent;
+	background-color: transparent;
+	font-size: 14px;
+	line-height: 17px;
+	font-family: droid-sans, sans-serif;
+	font-weight: 400;
+	margin-left: 344px;
+	position: relative;
+}
+
+#u253-4
+{
+	z-index: 22;
+	display: block;
+	vertical-align: top;
+	margin-left: 20px;
+	margin-top: 28px;
+	position: relative;
+}
+
+#u305-7
+{
+	z-index: 26;
+	width: 830px;
+	min-height: 160px;
+	-pie-box-shadow: 6px 6px 8px #7F7F7F;
+	-moz-box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 6px 6px 8px -1px rgba(0, 0, 0, 0.5);
+	box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.5);
+	border-width: 2px;
+	border-style: solid;
+	border-color: #42410B;
+	background-color: #FBF8CA;
+	text-align: center;
+	font-family: droid-sans, sans-serif;
+	font-weight: 400;
+	margin-left: 63px;
+	top: -1px;
+	margin-bottom: -1px;
+	position: relative;
+}
+
+#u305-3
+{
+	line-height: 0px;/* 0 for mixed font sized paras; applied on spans instead */
+}
+
+#u316
+{
+	float: left;
+}
+
+#u311
+{
+	z-index: 31;
+	width: 160px;
+}
+
+#u305-2,#u305-5
+{
+	font-size: 18px;
+	line-height: 22px;
+}
+
+#u112
+{
+	z-index: 3;
+	width: 1160px;
+	border-style: none;
+	border-color: transparent;
+	padding-bottom: 11px;
+	position: relative;
+	left: -100px;
+	margin-top: 407px;
+	background: #FFFFFF url("../images/tuile.jpg") repeat-x left top;
+}
+
+#u81_align_to_page,#u112_align_to_page
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+	position: relative;
+	left: -100px;
+}
+
+#u171-4
+{
+	z-index: 13;
+	width: 226px;
+	font-family: droid-sans, sans-serif;
+	font-weight: 400;
+	position: relative;
+	margin-right: -10000px;
+	margin-top: 28px;
+	left: 120px;
+}
+
+body
+{
+	padding-top: 36px;
+	padding-bottom: 30px;
+}
+
+#page .verticalspacer
+{
+	clear: both;
+}
+

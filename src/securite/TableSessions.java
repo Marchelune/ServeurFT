@@ -18,6 +18,11 @@ public class TableSessions {    //gère la création, l'accès et la supression 
 	}
 	
 	
+	public static void saveKinectSession(SessionKinect session)
+	{
+		ofy().save().entity(session).now();
+	}
+	
 	public static void saveSession(Session session)
 	{
 		ofy().save().entity(session).now();

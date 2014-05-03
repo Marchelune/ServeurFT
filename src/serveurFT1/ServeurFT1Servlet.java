@@ -27,7 +27,7 @@ public class ServeurFT1Servlet extends HttpServlet {
 			throws IOException {
 		try
 		{
-			List<User> users = ofy().load().type(User.class).order("-coins").limit(10).list();
+			List<User> users = ofy().load().type(User.class).order("-coins").limit(30).list();
 
 			req.setAttribute("users", users);
 			try {

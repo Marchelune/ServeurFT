@@ -111,7 +111,7 @@ public class Store extends HttpServlet { //service du catalogue : permet de cons
 						String snote = req.getParameter("note");
 						String comment = req.getParameter("comment");
 						if(snote != null && comment != null){
-							int note = Integer.parseInt(snote) % 5;
+							int note = Integer.parseInt(snote) % 6; //note entre 0 et 5
 
 							if(user.possede(sItem)){ // on vérifie que l'utilisateur a bien acheté l'item qu'il note.
 								Feedback feedback = new Feedback(user, comment,note, sItem);

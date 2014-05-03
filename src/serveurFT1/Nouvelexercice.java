@@ -56,22 +56,25 @@ public class Nouvelexercice extends HttpServlet {
 		if(s != null && sport != null && repetitions != null && duree != null && coins != null && controle != null)
 		{
 			User user = null;
-			if(TableSessions.getSession(s) != null){
+			
+			if(TableSessions.getSession(s) != null && TableSessions.getSession(s).getClass().equals(SessionKinect.class)){
 				SessionKinect session = (SessionKinect) TableSessions.getSession(s);
 				user = InteractionObjectify.getUserByKey(session.getUserKey() ); 
 				if (user != null)
 				{
 					String c = GenerateurCleControle.getCleControleur(session, Integer.parseInt(coins), Integer.parseInt(repetitions), Long.parseLong(duree));
 					if(controle.equals(c)){
-					Exercice exercice = new Exercice( new Date() , req.getParameter("sport"), Long.parseLong( req.getParameter("duree")), 
-							Integer.parseInt( req.getParameter("repetitions")), Integer.parseInt( req.getParameter("coins")));
-					
-					InteractionObjectify.saveExercice(exercice); // exercice sauvegardé dans le Datastore
-					session.incrementNmbExercices(); // on incrémente le nombre d'exercices réalisés sur cette session
+						Exercice exercice = new Exercice( new Date() , req.getParameter("sport"), Long.parseLong( req.getParameter("duree")), 
+								Integer.parseInt( req.getParameter("repetitions")), Integer.parseInt( req.getParameter("coins")));
 
-					Key<Exercice> cleExercice = Key.create(Exercice.class, exercice.getId());
-					user.addExercices(cleExercice, exercice);   // addExercice réalise toutes les opérations (ajout de SportCoins, ajout de l'exercice à l'historique etc)
-					InteractionObjectify.saveUser(user);
+						InteractionObjectify.saveExercice(exercice); // exercice sauvegardé dans le Datastore
+						
+						session.incrementNmbExercices(); // on incrémente le nombre d'exercices réalisés sur cette session
+						TableSessions.saveKinectSession(session);
+
+						Key<Exercice> cleExercice = Key.create(Exercice.class, exercice.getId());
+						user.addExercices(cleExercice, exercice);   // addExercice réalise toutes les opérations (ajout de SportCoins, ajout de l'exercice à l'historique etc)
+						InteractionObjectify.saveUser(user);
 					}else{reponse.sendError(HttpServletResponse.SC_UNAUTHORIZED );}
 				}
 			}

@@ -43,7 +43,7 @@ public class SessionKinect extends Session { //type de session spécifique aux s
 
 
 	public void incrementNmbExercices() {
-		nmbExercices += nmbExercices;
+		nmbExercices = nmbExercices +1;
 	}
 	
 }

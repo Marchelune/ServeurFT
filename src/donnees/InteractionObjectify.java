@@ -1,6 +1,9 @@
 package donnees;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.ArrayList;
+
 import securite.Session;
 
 import com.googlecode.objectify.Key;
@@ -14,6 +17,21 @@ public class InteractionObjectify {
         ObjectifyService.register(Session.class);
     }
 
+	public static void deleteUser(User user)
+	{
+		ofy().delete().entity(user).now();
+	
+	}
+	
+	
+	
+	public static void deleteExercicesByKeys(ArrayList<Key<Exercice>> exercices)
+	{
+		for(Key<Exercice> kExercice : exercices){
+			ofy().delete().key(kExercice).now();
+		}
+	
+	}
 	
 	public static User getUserById(String id)
 	{

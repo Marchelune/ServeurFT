@@ -31,19 +31,18 @@ public class Friends extends HttpServlet {
 				if (user != null){
 					if (q.equals("add")){
 						if(friend != null){
-							user.addFriend(id);
+							user.addFriend(friend.getId());
 							InteractionObjectify.saveUser(user);
 						}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
 					}else if (q.equals("delete")){
 						if(friend != null){
-							user.deleteFriend(id);
+							friend.deleteFriend(user.getId());
 							InteractionObjectify.saveUser(user);
 						}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
 					}
 				}else{resp.sendError(HttpServletResponse.SC_NOT_FOUND);}
-			}
-		}
-		catch (IOException e) {
+			}else{resp.sendError(HttpServletResponse.SC_BAD_REQUEST);}
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -224,6 +224,10 @@ public class User implements UserInterface {
 		return kPurchases;
 	}
 
+	public void deleteReferences(){
+		
+	}
+	
 	public Date getInscription() {
 		return inscription;
 	}

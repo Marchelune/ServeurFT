@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+
 
 
 
@@ -22,6 +24,14 @@ public class Catalogue { //gère la persistence et l'accès aux items du catalog
 	public static Feedback getFeedbackByKey(Key<Feedback> kf){
 		Feedback feedback = ofy().load().key(kf).now();
 		return feedback;
+	}
+	
+	public static void deletePurchasesByKeys(ArrayList<Key<Purchase>> purchases)
+	{
+		for(Key<Purchase> kPurchase : purchases){
+			ofy().delete().key(kPurchase).now();
+		}
+	
 	}
 	
 	public static ArrayList<Feedback> getFeedbacksByKey(ArrayList<Key<Feedback>> kfeedbacks){
